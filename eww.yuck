@@ -1,0 +1,78 @@
+;; == == == == Middle part == == == ==
+(defpoll time :interval "1s"
+  `date +'{"weekday":"%A","day":"%d","monthname":"%B","month":"%m","year":"%y","yearlong":"%Y","hour":"%H","min":"%M", "sec":"%S"}'`)
+
+(defwidget time_short []
+    (label  :class "time_short"
+            :text {time.hour + ":" + time.min}))
+
+(defwidget time_long []
+    (label  :class "time_long"
+            :text {time.hour + ":" + time.min + ":" + time.sec}))
+
+
+(defwidget date_short []
+    (label  :class "date_short"
+            :text {time.day + "-" + time.month + "-" + time.year}))
+
+(defwidget date_long []
+    (label  :calss "date_long"
+            :text {time.day + "-" + time.monthname + "-" + time.yearlong}))
+
+
+(defwidget sundial []
+    (label :class "sundial"
+           :text {time.hour >= 5 && time.hour < 11 ? "Morning" : 
+                time.hour >= 11 && time.hour < 13 ? "Prenoon" : 
+                time.hour >= 13 && time.hour < 15 ? "Lunch" : 
+                time.hour >= 15 && time.hour < 19 ? "Afternoon" :
+                time.hour >= 19 && time.hour < 23 ? "Evening" : "Night"}))
+
+
+(defwidget top_middle [] 
+    (button :onclick "notify-send '${time.day + "-" + time.monthname + "-" + time.yearlong}'"
+        (box :class "top_middle"
+             :orientation "horizontal"
+             :halign "center"
+             (time_short)
+             (sundial))))
+
+
+;; == == == == Right Part == == == ==
+(defwidget top_right []
+    (button :onclick "notify-send 'sysinfo'"
+        (box :class "top_right"
+             :orientation "horizontal"
+             :halign "end"
+             "info")))
+
+
+;; == == == == Left Part == == == ==
+(defwidget top_left []
+    (button :onclick "notify-send 'menu:)'"
+        (box :class "top_left"
+             :orientation "horizontal"
+             :halign "start"
+             "menu")))
+
+
+;; == == == == Bar == == == ==
+(defwidget bar []
+    (box :class "bar"
+         :orientation "horizontal"
+         :halign "fill"
+         (top_left)
+         (top_middle)
+         (top_right)))
+
+
+(defwindow top_bar
+        :monitor 0
+        :geometry (geometry :x "0%"
+                            :y "1%"
+                            :width "98%"
+                            :height "2%"
+                            :anchor "top center")
+        :stacking "fg"
+        :exclusive true
+    (bar))

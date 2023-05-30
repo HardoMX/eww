@@ -1,0 +1,59 @@
+(defpoll time :interval "1s"
+    :initial "date +%H:%M:%S"
+    "date +%H:%M:%S")
+
+(defwidget time []
+    (label  :class "time"
+            :text time
+            :halign "center"))
+
+(defwidget sundial []
+    (label  :class "dial"
+            ))
+
+
+(defwidget net []
+    (box :class "net"
+         :orientation "vertical"
+         :halign "end"
+        (box :orientation "horizontal"
+             :space-evenly false
+            (label :text "Up: ")
+            (label :text {EWW_NET.enp5s0.NET_UP/2 < 1000 ? round(EWW_NET.enp5s0.NET_UP/2, 0) : 
+                EWW_NET.enp5s0.NET_UP/2 < 1000000 ? round(EWW_NET.enp5s0.NET_UP/2000, 0) : 
+                    round(EWW_NET.enp5s0.NET_UP/2000000, 0)})
+            (label :text {EWW_NET.enp5s0.NET_UP/2 < 1000 ? "B" : 
+                EWW_NET.enp5s0.NET_UP/2 < 1000000 ? "KB" : 
+                    "MB"}))
+
+        (box :orientation "horizontal"
+             :space-evenly false
+            (label :text "Down: ")
+            (label :text {EWW_NET.enp5s0.NET_DOWN/2 < 1000 ? round(EWW_NET.enp5s0.NET_DOWN/2, 0) : 
+                EWW_NET.enp5s0.NET_DOWN/2 < 1000000 ? round(EWW_NET.enp5s0.NET_DOWN/2000, 0) : 
+                    round(EWW_NET.enp5s0.NET_DOWN/2000000, 0)})
+            (label :text {EWW_NET.enp5s0.NET_DOWN/2 < 1000 ? "B" : 
+                EWW_NET.enp5s0.NET_DOWN/2 < 1000000 ? "KB" : 
+                    "MB"}))))
+
+
+
+(defwidget layout []
+    (box :class "layout"
+         :orientation "horizontal"
+         :space-evenly false
+         :spacing "50"
+         :halign "end"
+        (time)
+        (net)))
+
+(defwindow powermenu
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "1%"
+                               :width "90%"
+                               :height "2%"
+                               :anchor "top center")
+           :stacking "fg"
+           :exclusive true
+  (layout))
