@@ -1,0 +1,2 @@
+### Necessary programs:
+    - playerctl
