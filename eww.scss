@@ -1,0 +1,37 @@
+
+$bg-color: #2E3440;
+$fg-color: #D08770;
+$brdr-clr: #D8DEE9;
+$brdr-sz: 1px;
+$brdr-rd: 12px;
+$pd: 6px;
+
+* { 
+    /*all: unset; */
+    font-family: JetBrainsMono Nerd Font;
+    font-size: 16px;
+}
+
+.top_left {
+    background-color: $bg-color;
+    color: $fg-color;
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: $pd;
+}
+
+.top_middle {
+    background-color: $bg-color;
+    color: $fg-color;
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: $pd;
+}
+
+.top_right {
+    background-color: $bg-color;
+    color: $fg-color;
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: $pd;
+}

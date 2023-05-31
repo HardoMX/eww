@@ -1,4 +1,15 @@
-;; == == == == Middle part == == == ==
+(defvar separator "|")
+
+
+
+;;                  __  __ _     _     _ _         _____           _                   
+;;  _____________  |  \/  (_)   | |   | | |       |  __ \         | |    _____________ 
+;; |_____________| | \  / |_  __| | __| | | ___   | |__) |_ _ _ __| |_  |_____________|
+;;  _____________  | |\/| | |/ _` |/ _` | |/ _ \  |  ___/ _` | '__| __|  _____________ 
+;; |_____________| | |  | | | (_| | (_| | |  __/  | |  | (_| | |  | |_  |_____________|
+;;                 |_|  |_|_|\__,_|\__,_|_|\___|  |_|   \__,_|_|   \__|
+
+;; == == == Time == == ==
 (defpoll time :interval "1s"
   `date +'{"weekday":"%A","day":"%d","monthname":"%B","month":"%m","year":"%y","yearlong":"%Y","hour":"%H","min":"%M", "sec":"%S"}'`)
 
@@ -11,15 +22,17 @@
             :text {time.hour + ":" + time.min + ":" + time.sec}))
 
 
+;; == == == Date == == ==
 (defwidget date_short []
     (label  :class "date_short"
             :text {time.day + "-" + time.month + "-" + time.year}))
 
 (defwidget date_long []
-    (label  :calss "date_long"
+    (label  :class "date_long"
             :text {time.day + "-" + time.monthname + "-" + time.yearlong}))
 
 
+;; == == == Sundial == == ==
 (defwidget sundial []
     (label :class "sundial"
            :text {time.hour >= 5 && time.hour < 11 ? "Morning" : 
@@ -29,38 +42,145 @@
                 time.hour >= 19 && time.hour < 23 ? "Evening" : "Night"}))
 
 
+;; == == == Main Widget == == ==
 (defwidget top_middle [] 
     (button :onclick "notify-send '${time.day + "-" + time.monthname + "-" + time.yearlong}'"
-        (box :class "top_middle"
-             :orientation "horizontal"
+        :class "top_middle"
+        (box :orientation "horizontal"
              :halign "center"
+             :space-evenly false
+             :spacing 10
              (time_short)
+             separator
              (sundial))))
 
 
-;; == == == == Right Part == == == ==
+
+;;                  _____  _       _     _      _____           _                   
+;;  _____________  |  __ \(_)     | |   | |    |  __ \         | |    _____________ 
+;; |_____________| | |__) |_  __ _| |__ | |_   | |__) |_ _ _ __| |_  |_____________|
+;;  _____________  |  _  /| |/ _` | '_ \| __|  |  ___/ _` | '__| __|  _____________ 
+;; |_____________| | | \ \| | (_| | | | | |_   | |  | (_| | |  | |_  |_____________|
+;;                 |_|  \_\_|\__, |_| |_|\__|  |_|   \__,_|_|   \__|                
+;;                            __/ |                                                 
+;;                           |___/                                                  
+
+;; == == == System Info == == ==
+(defvar sysinfo_reveal false)
+
+(defwidget fullinfo [reveal]
+    (box :class "full-info"
+         :visible reveal
+         (label :text "full info")))
+
+(defwidget sysinfo []
+    (eventbox :class "sysinfo"
+              :cursor "pointer"
+              :onclick "eww update sysinfo_reveal=${sysinfo_reveal ? false : true}"
+              (box  :orientation "horizontal"
+                    :halign "end"
+                    :space-evenly false
+                    :spacing 10
+                    (label :text "info"))))
+
+
+
+
+;; == == == Music == == ==
+(defvar fullmusic false)
+
+(deflisten music :initial ""
+    "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+
+(defwidget music_short []
+    (eventbox :class "music-short"
+              :cursor "pointer"
+              :onclick "eww update fullmusic=${!fullmusic}"
+              (box  :orientation "horizontal"
+                    :space-evenly false
+                    :halign "start"
+                    {music != "" ? "${music}" : "Listening"})))
+
+(defwidget music_long [reveal]
+    (box :class "music-long"
+         :visible reveal
+         (label :text "music")))
+
+
+;; == == == Main Widget == == ==
 (defwidget top_right []
-    (button :onclick "notify-send 'sysinfo'"
-        (box :class "top_right"
-             :orientation "horizontal"
-             :halign "end"
-             "info")))
+    (box :class "top_right"
+         :orientation "horizontal"
+         :halign "end"
+         :space-evenly false
+         :spacing 10
+         (music_short)
+         separator
+         (sysinfo)))
+
+(defwidget right_info []
+    (box :class "right_info"
+         :orientation "horizontal"
+         :halign "end"
+         :space-evenly false
+         :spacing 10
+         (fullinfo :reveal sysinfo_reveal)
+         (music_long :reveal fullmusic)))
 
 
-;; == == == == Left Part == == == ==
+
+;;                  _           __ _     _____           _                   
+;;  _____________  | |         / _| |    |  __ \         | |    _____________ 
+;; |_____________| | |     ___| |_| |_   | |__) |_ _ _ __| |_  |_____________|
+;;  _____________  | |    / _ \  _| __|  |  ___/ _` | '__| __|  _____________ 
+;; |_____________| | |___|  __/ | | |_   | |  | (_| | |  | |_  |_____________|
+;;                 |______\___|_|  \__|  |_|   \__,_|_|   \__|                
+
+;; == == == Hyprland Integration == == ==
+(defwidget active []
+    (box :class "active-window"
+        (label :text "active-window")))
+
+(defwidget workspace []
+    (box :class "workspaces"
+        (label :text "workspaces")))
+
+;; == == == Main Menu == == ==
+(defwidget menu []
+    (button :onclick "notify-send 'menu :)'"
+        :class "menu"
+        (label :text "menu")))
+
+
+;; == == == Main Widget == == ==
 (defwidget top_left []
-    (button :onclick "notify-send 'menu:)'"
-        (box :class "top_left"
-             :orientation "horizontal"
-             :halign "start"
-             "menu")))
+    (box :class "top_left"
+         :orientation "horizontal"
+         :halign "start"
+         :space-evenly false
+         :spacing 10
+         (menu)
+         separator
+         (active)
+         separator
+         (workspace)))
 
 
-;; == == == == Bar == == == ==
+
+;;                  ____                             
+;;  _____________  |  _ \              _____________ 
+;; |_____________| | |_) | __ _ _ __  |_____________|
+;;  _____________  |  _ < / _` | '__|  _____________ 
+;; |_____________| | |_) | (_| | |    |_____________|
+;;                 |____/ \__,_|_|                  
 (defwidget bar []
     (box :class "bar"
          :orientation "horizontal"
-         :halign "fill"
+         :halign "center"
+         :hexpand true
+         :vexpand true
+         :space-evenly false
+         :spacing 1000
          (top_left)
          (top_middle)
          (top_right)))
@@ -69,10 +189,32 @@
 (defwindow top_bar
         :monitor 0
         :geometry (geometry :x "0%"
-                            :y "1%"
-                            :width "98%"
+                            :y "5px"
+                            :width "96%"
                             :height "2%"
                             :anchor "top center")
         :stacking "fg"
         :exclusive true
     (bar))
+
+
+(defwidget info_bar []
+    (box :class "info-bar"
+         :orientation "horizontal"
+         :halign "center"
+         :hexpand true
+         :vexpand true
+         :space-evenly false
+         :spacing 1000
+         (right_info)))
+
+(defwindow right_info
+    :monitor 0
+    :geometry (geometry :x "11%"
+                        :y "0%"
+                        :width "0px"
+                        :height "0px"
+                        :anchor "top right")
+    :stacking "fg"
+    :exclusive false
+    (info_bar))
