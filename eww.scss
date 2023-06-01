@@ -2,17 +2,20 @@
 $bg-color: #2E3440;
 $fg-color: #D08770;
 $brdr-clr: #D8DEE9;
-$brdr-sz: 1px;
+$brdr-sz: 2px;
 $brdr-rd: 12px;
 $pd: 6px;
+$font-sz: 16px;
 
 * { 
     /*all: unset; */
     font-family: JetBrainsMono Nerd Font;
-    font-size: 16px;
 }
 
+
+/* Main Widgets */
 .top_left {
+    font-size: $font-sz;
     background-color: $bg-color;
     color: $fg-color;
     border: $brdr-sz solid $brdr-clr;
@@ -21,6 +24,7 @@ $pd: 6px;
 }
 
 .top_middle {
+    font-size: $font-sz;
     background-color: $bg-color;
     color: $fg-color;
     border: $brdr-sz solid $brdr-clr;
@@ -29,9 +33,55 @@ $pd: 6px;
 }
 
 .top_right {
+    font-size: $font-sz;
     background-color: $bg-color;
     color: $fg-color;
     border: $brdr-sz solid $brdr-clr;
     border-radius: $brdr-rd;
     padding: $pd;
+}
+
+
+/* Muic */
+.music-long {
+    background-color: $bg-color;
+    color: $fg-color;
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: 20px;
+}
+
+.music-art {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: $pd;
+}
+.music-long-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #FFFFFF;
+    background-color: #4c566a;
+    border: 2px solid #D8DEE9;
+    border-radius: 8px;
+    padding: 10px;
+}
+.music-long-album {
+    font-size: 14px;
+    color: #d8dee9;
+}
+
+.music-long-next {
+    color: #FFFFFF;
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+}
+.music-long-play {
+    color: #FFFFFF;
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+}
+.music-long-prev {
+    color: #FFFFFF;
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
 }

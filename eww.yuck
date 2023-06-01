@@ -68,15 +68,66 @@
 ;; == == == System Info == == ==
 (defvar sysinfo_reveal false)
 
-(defwidget fullinfo [reveal]
+(defwidget cpu_info []
+    (box :class "info-cpu"
+         :space-evenly false
+         :orientation "vertical"
+         (box :class "info-cpu-title"
+              (label :text "CPU"))
+         (box :class "info-cpu-usage"
+              :orientation "horizontal"
+              (box :class "info-cpu-usage-freq"
+                    (label :text {EWW_CPU.freq}))
+              (box :class "info-cpu-usage-percent"
+                    (label :text {EWW_CPU.usage})))
+         (box :class "info-cpu-graph"
+              (label :text "graph"))
+         (box :class "info-cpu-legend"
+              (label :text "legend"))
+         (box :class "info-cpu-processes"
+              (label :text "processes"))))
+
+(defwidget mem_info []
+    (box :class "info-mem"
+         :orientation "vertical"
+         :space-evenly false
+         (box :class "info-mem-title"
+              (label :text "Memory"))
+         (box :class "info-mem-usage"
+              :orientation "horizontal"
+              (box :class "info-mem-usage-used"
+                    (label :text "Used: ${EWW_RAM.used_mem}"))
+              (box :class "info-mem-usage-free"
+                    (label :text {EWW_RAM.free_mem})))
+         (box :class "info-mem-graph"
+              (label :text "graph"))
+         (box :class "info-mem-legend"
+              (label :text "legend"))
+         (box :class "info-mem-processe"
+              (label :text "processes"))))
+
+(defwidget net_info []
+    (box :class "net-info"
+         :orientation "vertical"
+         :space-evenly false
+         (box :class "net-info-title"
+              (label :text "Network"))
+         (box :class "net-info-usage"
+              :orientation "horizontal"
+              (label :text "up")
+              (label :text "down"))))
+
+(defwidget fullinfo []
     (box :class "full-info"
-         :visible reveal
-         (label :text "full info")))
+         :orientation "vertical"
+         (cpu_info)
+         (mem_info)
+         (net_info)))
 
 (defwidget sysinfo []
     (eventbox :class "sysinfo"
               :cursor "pointer"
-              :onclick "eww update sysinfo_reveal=${sysinfo_reveal ? false : true}"
+              :onclick "eww update sysinfo_reveal=${!sysinfo_reveal}"
               (box  :orientation "horizontal"
                     :halign "end"
                     :space-evenly false
@@ -89,8 +140,20 @@
 ;; == == == Music == == ==
 (defvar fullmusic false)
 
-(deflisten music :initial ""
-    "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+(deflisten music_status :initial ""
+    "playerctl --follow status --format '{{ uc(status) }}' || tru || true")
+(deflisten music_artist :initial ""
+    "playerctl --follow metadata --format '{{ artist }}' || true")
+(deflisten music_title :initial ""
+    "playerctl --follow metadata --format '{{ title }}' || true")
+(deflisten music_album :initial ""
+    "playerctl --follow metadata --format '{{ album }}' || true")
+(deflisten music_image :initial ""
+    "playerctl --follow metadata --format '{{ mpris:artUrl}}'")
+(deflisten music_progress :initial ""
+    "playerctl --follow position --format {{ duration(position) }}")
+(deflisten music_length :initial ""
+    "playerctl --follow metadata --format {{ duration(mpris:length) }}")
 
 (defwidget music_short []
     (eventbox :class "music-short"
@@ -99,12 +162,54 @@
               (box  :orientation "horizontal"
                     :space-evenly false
                     :halign "start"
-                    {music != "" ? "${music}" : "Listening"})))
+                    {music_status == "PLAYING" || music_status == "PAUSED" ? "${music_artist} - ${music_title}" : "Listening"})))
 
-(defwidget music_long [reveal]
+(defwidget music_long []
     (box :class "music-long"
-         :visible reveal
-         (label :text "music")))
+         :orientation "vertical"
+         :space-evenly false
+         :spacing 10
+         :hexpand true
+         :vexpand true
+         (box :orientation "horizontal"
+              :space-evenly false
+              :spacing 20
+              (box :class "Music-Art"
+                   (image :path {music_status == "PLAYING" || music_status == "PAUSED" ? "${replace(music_image, 'file:/', '')}" : ""}
+                          :image-width 200
+                          :image-height 200))
+              (box :orientation "Vertical"
+                    :space-evenly false
+                    :spacing 10
+                    (box :class "music-long-title"
+                         (label :text {music_status == "PLAYING" || music_status == "PAUSED" ? "${music_title}" : ""}))
+                    (box :class "music-long-album"
+                         {music_status == "PLAYING" || music_status == "PAUSED" ? "${music_album}" : ""})
+                    (box :class "music-long-artist"
+                         {music_status == "PLAYING" || music_status == "PAUSED" ? "${music_artist}" : ""})
+                    (box :class "music-long-ontrols"
+                         :halign "center"
+                         (box :orientation "horizontal"
+                              :space-evenly false
+                              :spacing 10
+                              (eventbox :class "music-long-next"
+                                        :onclick "playerctl previous"
+                                        :cursor "pointer"
+                                        :width 30
+                                        :height 30
+                                        (label :text ""))
+                              (eventbox :class "music-long-play"
+                                        :onclick "playerctl play-pause"
+                                        :cursor "pointer"
+                                        :width 30
+                                        {music_status == "PLAYING" ? "" : ""})
+                              (eventbox :class "music-long-prev"
+                                        :onclick "playerctl next"
+                                        :cursor "pointer"
+                                        :width 30
+                                        (label :text ""))))))
+         (box :class "music-long-progress"
+              {music_status == "PLAYING" || music_status == "PAUSED" ? "${music_progress}/${music_length}" : ""})))
 
 
 ;; == == == Main Widget == == ==
@@ -118,14 +223,7 @@
          separator
          (sysinfo)))
 
-(defwidget right_info []
-    (box :class "right_info"
-         :orientation "horizontal"
-         :halign "end"
-         :space-evenly false
-         :spacing 10
-         (fullinfo :reveal sysinfo_reveal)
-         (music_long :reveal fullmusic)))
+
 
 
 
@@ -198,23 +296,28 @@
     (bar))
 
 
-(defwidget info_bar []
+(defwidget info_bar [musicreveal inforeveal]
     (box :class "info-bar"
          :orientation "horizontal"
          :halign "center"
          :hexpand true
          :vexpand true
          :space-evenly false
-         :spacing 1000
-         (right_info)))
+         :spacing 0
+         (revealer :transition "slidedown"
+                    :reveal musicreveal
+                    (music_long))
+         (revealer :transition "slidedown"
+                    :reveal inforeveal
+                    (fullinfo))))
 
 (defwindow right_info
     :monitor 0
-    :geometry (geometry :x "11%"
+    :geometry (geometry :x "10%"
                         :y "0%"
                         :width "0px"
                         :height "0px"
                         :anchor "top right")
     :stacking "fg"
     :exclusive false
-    (info_bar))
+    (info_bar :musicreveal fullmusic :inforeveal sysinfo_reveal))
