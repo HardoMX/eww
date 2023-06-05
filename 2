@@ -1,5 +1,0 @@
-import subprocess
-
-command = "wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr -d 'Volume: '"
-output = subprocess.run(["wpctl", "get-volume", "0"], stdout=subprocess.PIPE)
-print(output.stdout)
