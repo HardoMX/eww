@@ -8,7 +8,7 @@ $pd: 6px;
 $font-sz: 16px;
 
 * { 
-    /*all: unset; */
+    all: unset; 
     font-family: JetBrainsMono Nerd Font;
 }
 
@@ -57,7 +57,7 @@ $font-sz: 16px;
     padding: $pd;
 }
 .music-long-title {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 900;
     color: #FFFFFF;
     background-color: #4c566a;
@@ -68,6 +68,17 @@ $font-sz: 16px;
 .music-long-album {
     font-size: 14px;
     color: #d8dee9;
+    border: 2px solid #7c90b6;
+    border-radius: 5px;
+    padding: 3px;
+}
+.music-long-artist {
+    font-size: 19px;
+    font-weight: 500;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    border-radius: 7px;
+    padding: 6px;
 }
 
 .music-long-next {
@@ -84,4 +95,43 @@ $font-sz: 16px;
     color: #FFFFFF;
     border: $brdr-sz solid $brdr-clr;
     border-radius: $brdr-rd;
+}
+
+
+/* Sysinfo */
+.full-info {
+    background-color: $bg-color;
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: 20px;
+}
+
+.info-cpu-title {
+    color: #a3be8c;
+    font-size: 2em;
+}
+.info-cpu-graph {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: 10px;
+}
+
+.info-mem-title {
+    color: #a3be8c;
+    font-size: 2em;
+}
+.info-mem-graph {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: 10px;
+}
+
+.net-info-title {
+    color: #a3be8c;
+    font-size: 2em;
+}
+.net-info-graph {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: 10px;
 }
