@@ -72,6 +72,7 @@
 (defpoll vol_perc :interval "3s"
     "wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr  -d 'Volume: ' | tr -d '[MUTED]'")
 
+
 (defwidget cpu []
     (circular-progress :class "cpu-circle"
                         :value {EWW_CPU.cores[0].usage}
@@ -104,13 +105,16 @@
                     (revealer :transition "slideleft"
                               :reveal vol_reveal
                               (scale :class "volume-bar"
-                                     :value {vol_perc*100}
-                                     :draw-value true
+                                     :width 100
+                                     ;:value {vol_perc*100} ;;Will be used when scale works correctly
+                                     :value 50
+                                     :draw-value false
                                      :tooltip "${vol_perc*100}%"
                                      :orientation "horizontal"
                                      :max 100
                                      :min 0
                                      :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")))))
+
 
 (defwidget cpu_info []
     (box :class "info-cpu"
