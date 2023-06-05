@@ -69,7 +69,7 @@
 (defvar sysinfo_reveal false)
 (defvar vol_reveal false)
 (defvar vol_mute false)
-(defpoll vol_perc :interval "3s"
+(defpoll vol_perc :interval "1s"
     "wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr  -d 'Volume: ' | tr -d '[MUTED]'")
 
 
@@ -91,6 +91,7 @@
                         :width 20
                         (label :text {round(EWW_RAM.used_mem/1000000000, 0)})))
 
+
 (defwidget volume []
     (eventbox :onhover "eww update vol_reveal=true"
               :onhoverlost "eww update vol_reveal=false"
@@ -105,10 +106,8 @@
                     (revealer :transition "slideleft"
                               :reveal vol_reveal
                               (scale :class "volume-bar"
-                                     :width 100
-                                     ;:value {vol_perc*100} ;;Will be used when scale works correctly
-                                     :value 50
-                                     :draw-value false
+                                     :value {vol_perc*100}
+                                     :round-digits 0
                                      :tooltip "${vol_perc*100}%"
                                      :orientation "horizontal"
                                      :max 100
@@ -270,9 +269,6 @@
 
 (defwidget sysinfo []
     (box :space-evenly false
-        (box 
-            (volume))
-      separator
         (eventbox :class "sysinfo"
                   :cursor "pointer"
                   :onclick "eww update sysinfo_reveal=${!sysinfo_reveal} && eww update fullmusic=${fullmusic ? '${!fullmusic}' : '${fullmusic}'}"
@@ -369,6 +365,8 @@
          :space-evenly false
          :spacing 10
          (sound)
+         separator
+         (volume)
          separator
          (sysinfo)))
 

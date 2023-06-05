@@ -61,7 +61,7 @@ $font-sz: 16px;
     font-weight: 900;
     color: #FFFFFF;
     background-color: #4c566a;
-    border: 2px solid #D8DEE9;
+    border-image: linear-gradient(45deg, #ffffff, #adbad1) 20 / 4px;
     border-radius: 8px;
     padding: 10px;
 }
@@ -95,6 +95,23 @@ $font-sz: 16px;
     color: #FFFFFF;
     border: $brdr-sz solid $brdr-clr;
     border-radius: $brdr-rd;
+}
+
+/* volume and brightness */
+.volume-bar {
+    color: $brdr-clr;
+}
+.volume-bar trough {
+    background-color: #4c566a;
+    border-radius: 50px;
+    min-height: 10px;
+    min-width: 100px;
+    margin: 0px 10px 0px 10px;
+}
+.volume-bar trough highlight {
+    background-color: $brdr-clr;
+    color: #000000;
+    border-radius: 10px;
 }
 
 
