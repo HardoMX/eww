@@ -42,7 +42,7 @@ $font-sz: 16px;
 }
 
 
-/* Calendar */
+/* Calendar bar */
 .calendar-bar-main {
     background-color: $bg-color;
     color: $fg-color;
@@ -55,14 +55,36 @@ $font-sz: 16px;
     border-radius: $brdr-rd;
     padding: $pd;
 }
-.calendar-bar-time {
+.calendar-bar-top-right {
     border: $brdr-sz solid $brdr-clr;
     border-radius: $brdr-rd;
     padding: $pd;
-    min-width: 200px;
+    min-width: 100px;
 }
 .calendar-bar-hour {
-    font-size: 20px;
+    font-size: 3em;
+}
+.calendar-bar-min {
+    font-size: 3em;
+}
+.calendar-time-sec {
+    font-size: 1.3em;
+}
+.calendar-bar-sundial {
+    font-size: 2em
+}
+.calendar-bar-bottom {
+    font-size: 2em;
+}
+.calendar-bar-temp {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: $pd;
+}
+.calendar-bar-weather {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: $pd;
 }
 
 

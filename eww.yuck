@@ -36,8 +36,7 @@
 
 ;; == == == Sundial == == ==
 (defwidget sundial []
-    (label :class "sundial"
-           :text {time.hour >= 5 && time.hour < 11 ? "Morning" : 
+    (label :text {time.hour >= 5 && time.hour < 11 ? "Morning" : 
                 time.hour >= 11 && time.hour < 13 ? "Prenoon" : 
                 time.hour >= 13 && time.hour < 15 ? "Lunch" : 
                 time.hour >= 15 && time.hour < 19 ? "Afternoon" :
@@ -47,28 +46,40 @@
 ;; == == == Weather == == ==
 (defpoll weather_temp :interval "15m"
     "./scripts/weather.sh --temp")
+(defpoll weather_feels :interval "15m"
+    "./scripts/weather.sh --feels")
 (defpoll weather_status :interval "15m"
-    "./scripts/weather.sh --cond")
+    "./scripts/weather.sh --condition")
 (defpoll weather_locale :interval "15m"
     "./scripts/weather.sh --locale")
 
 (defwidget weather []
     (box :class "calendar-bar-bottom"
          :orientation "horizontal"
+         :halign "center"
+         :space-evenly false
+         :spacing 20
          (box :class "calendar-bar-temp"
-              (label :text "${weather_temp}°C"))
+              (label :text "${round(weather_temp, 0)}(${weather_feels})°C"))
          (box :class "calendar-bar-weather"
               (label :text {weather_status}))))
 
 (defwidget calendar_time []
     (box :class "calendar-bar-time"
          :orientation "vertical"
+         :space-evenly false
          (label :class "calendar-bar-hour"
                 :text {time.hour}
                 :halign "start")
-         (label :class "calendar-bar-minsec"
-                :text "${time.min}:${time.sec}"
-                :halign "end")))
+         (box :halign "end"
+              :space-evenly false
+              (label :class "calendar-bar-min"
+                     :text {time.min})
+              (label :class "calendar-time-sec"
+                     :text ":${time.sec}"))))
+(defwidget calendar_sundial []
+    (box :class "calendar-bar-sundial"
+         (sundial)))
 
 (defwidget calendar_wid []
     (box :class "calendar-wid"
@@ -92,7 +103,7 @@
                          :spacing 10
                          :valign "center"
                          (calendar_time)
-                         (sundial)))
+                         (calendar_sundial)))
                     (weather))))
 
 
@@ -164,10 +175,6 @@
                     :space-evenly false
                     :spacing 2
                     :orientation "horizontal"
-                    (eventbox :onclick "eww update vol_mute=${!vol_mute} && wpctl set-mute @DEFAULT_AUDIO_SINK@ ${!vol_mute ? '1' : '0'}"
-                              :cursor "pointer"
-                              :class "volume-mute"
-                              (label :text {vol_mute ? "🔇" : "🔊"}))
                     (revealer :transition "slideleft"
                               :reveal vol_reveal
                               (scale :class "volume-bar"
@@ -177,7 +184,11 @@
                                      :orientation "horizontal"
                                      :max 100
                                      :min 0
-                                     :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")))))
+                                     :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"))
+                    (eventbox :onclick "eww update vol_mute=${!vol_mute} && wpctl set-mute @DEFAULT_AUDIO_SINK@ ${!vol_mute ? '1' : '0'}"
+                              :cursor "pointer"
+                              :class "volume-mute"
+                              (label :text {vol_mute ? "🔇" : "🔊"})))))
 
 
 (defwidget cpu_info []
