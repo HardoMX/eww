@@ -42,7 +42,27 @@ $font-sz: 16px;
 }
 
 
-/* Muic */
+/* Calendar */
+.calendar-bar-main {
+    background-color: $bg-color;
+    color: $fg-color;
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: $pd
+}
+.calendar-bar-calendar {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: $pd;
+}
+.calendar-bar-time {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: $pd;
+}
+
+
+/* Music */
 .music-long {
     background-color: $bg-color;
     color: $fg-color;
@@ -126,26 +146,45 @@ $font-sz: 16px;
 .info-cpu-title {
     color: #a3be8c;
     font-size: 2em;
+    border-bottom: 3px solid #a3be8c;
 }
 .info-cpu-graph {
     border: $brdr-sz solid $brdr-clr;
     border-radius: $brdr-rd;
     padding: 10px;
 }
+.info-cpu-process {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: 10px;
+}
+.info-cpu-legend {
+    border-bottom: $brdr-sz solid $brdr-clr;
+}
 
 .info-mem-title {
     color: #a3be8c;
     font-size: 2em;
+    border-bottom: 3px solid #a3be8c;
 }
 .info-mem-graph {
     border: $brdr-sz solid $brdr-clr;
     border-radius: $brdr-rd;
     padding: 10px;
 }
+.info-mem-process {
+    border: $brdr-sz solid $brdr-clr;
+    border-radius: $brdr-rd;
+    padding: 10px;
+}
+.info-mem-legend {
+    border-bottom: $brdr-sz solid $brdr-clr;
+}
 
 .net-info-title {
     color: #a3be8c;
     font-size: 2em;
+    border-bottom: 3px solid #a3be8c
 }
 .net-info-graph {
     border: $brdr-sz solid $brdr-clr;

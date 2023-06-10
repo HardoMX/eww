@@ -58,15 +58,11 @@
          (box :class "calendar-bar-temp"
               (label :text "${weather_temp}°C"))
          (box :class "calendar-bar-weather"
-              (label :text {weather_status}))))
-
-(defwidget calendar_time []
-    (box :class "calendar-bar-time"
-         :orientation "vertical"
-         (label :text {time.hour}
-                :halign "start")
-         (label :text "${time.min}:${time.sec}"
-                :halign "end")))
+              (label :text {weather_status}))
+         (box :class "calendar-bar-symbol"
+              (label :text "symb"))
+         (box :class "calendar-bar-locale"
+              (label :text {weather_locale}))))
 
 (defwidget calendar_wid []
     (box :class "calendar-wid"
@@ -80,16 +76,10 @@
               :spacing 10
               (box :class "calendar-bar-top"
                     :orientation "horizontal"
-                    :space-evenly false
-                    :spacing 10
-                    (calendar :class "calendar-bar-calendar"
-                              :show-week-numbers true)
-                    (box :class "calendar-bar-top-right"
+                    (calendar :class "calendar-bar-calendar")
+                    (box :class "calendar-bar-top-rigth"
                          :orientation "vertical"
-                         :space-evenly false
-                         :spacing 10
-                         :valign "center"
-                         (calendar_time)
+                         (time_long)
                          (sundial)))
                     (weather))))
 

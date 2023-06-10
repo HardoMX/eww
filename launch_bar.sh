@@ -8,4 +8,4 @@ if [[ ! `pidof eww` ]]; then
     sleep 1
 fi
 
-${EWW} open-many top_bar right_info music_bar
+${EWW} open-many top_bar right_info music_bar calendar
