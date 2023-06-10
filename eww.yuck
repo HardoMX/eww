@@ -63,9 +63,11 @@
 (defwidget calendar_time []
     (box :class "calendar-bar-time"
          :orientation "vertical"
-         (label :text {time.hour}
+         (label :class "calendar-bar-hour"
+                :text {time.hour}
                 :halign "start")
-         (label :text "${time.min}:${time.sec}"
+         (label :class "calendar-bar-minsec"
+                :text "${time.min}:${time.sec}"
                 :halign "end")))
 
 (defwidget calendar_wid []

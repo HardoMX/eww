@@ -59,6 +59,10 @@ $font-sz: 16px;
     border: $brdr-sz solid $brdr-clr;
     border-radius: $brdr-rd;
     padding: $pd;
+    min-width: 200px;
+}
+.calendar-bar-hour {
+    font-size: 20px;
 }
 
 
