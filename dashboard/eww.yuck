@@ -1,0 +1,132 @@
+
+;; == == == Account == == == 
+(defpoll user :interval "24h"
+    "whoami")
+
+(defwidget profile []
+    (box :class "profile"
+         :orientation "vertical"
+         (image :path "./images/profile.png"
+                :image-width 100
+                :image-height 100)
+         (label :text {user})))
+
+;; == == == Sysinfo == == ==
+(defwidget cpu []
+    (box :class "cpu"
+         :orientation "vertical"
+         (circular-progress :class "cpu-circle"
+                            :value {EWW_CPU.avg}
+                            :thickness 10
+                            :clockwise true
+                            :start-at 25
+                            :width 100
+                            :height 100
+                            (label :text "${round(EWW_CPU.avg, 0)}%"))
+         (label :class "cpu-title"
+                :text "CPU")))
+
+(defwidget mem []
+    (box :class "mem"
+         :orientation "vertical"
+         (circular-progress :class "mem-circle"
+                            :value {EWW_RAM.used_mem/1000000000*100/32} ;;Needs improvement for dynamic memory amount
+                            :thickness 10
+                            :clockwise true
+                            :start-at 25
+                            :width 100
+                            :height 100
+                            (label :text "${round(EWW_RAM.used_mem/1000000000, 0)}GB"))
+         (label :class "mem-title"
+                :text "MEM")))
+
+(defwidget disk []
+    (box :class "disk"
+         :orientation "vertical"
+         (circular-progress :class "disk-circle"
+                            :value {EWW_DISK["/"].used_perc}
+                            :thickness 10
+                            :clockwise true
+                            :start-at 25
+                            :width 100
+                            :height 100
+                            (label :text "${round(EWW_DISK["/"].used_perc, 2)}%"))
+         (label :class "disk-title"
+                :text "DISK")))
+
+(defwidget sysinfo[]
+    (box :class "sysinfo"
+        :orientation "horizontal"
+        (cpu)
+        (mem)
+        (disk)))
+
+
+;; == == == Time == == ==
+(defwidget sundial []
+    (label :text {formattime(EWW_TIME, "%H") >= 5 && formattime(EWW_TIME, "%H") < 11 ? "Morning" : 
+                  formattime(EWW_TIME, "%H") >= 11 && formattime(EWW_TIME, "%H") < 13 ? "Prenoon" : 
+                  formattime(EWW_TIME, "%H") >= 13 && formattime(EWW_TIME, "%H") < 15 ? "Lunch" : 
+                  formattime(EWW_TIME, "%H") >= 15 && formattime(EWW_TIME, "%H") < 19 ? "Afternoon" : 
+                  formattime(EWW_TIME, "%H") >= 19 && formattime(EWW_TIME, "%H") < 22 ? "Evening" : "Night"}))
+
+(defwidget time []
+    (box :class "time"
+         :orientation "horizontal"
+         (box :class "time-time"
+              :orientaion "horizontal"
+              (label :text {formattime(EWW_TIME, "%H")})
+              (label :text {formattime(EWW_TIME, "%M")}))
+         (box :class "time-date"
+              :orientation "vertical"
+              (label :text {formattime(EWW_TIME, "%A")})
+              (label :text (sundial)))))
+
+
+;; == == == Row Widgets == == ==
+(defwidget left []
+    (box :class "left"
+         :orientation "vertical"
+         (profile)
+         (sysinfo)))
+
+(defwidget row_1 []
+    (box :class "row-1"
+         :orientation "horizontal"
+         (time)))
+
+(defwidget row_2 []
+    (box :class "row-1"
+         :orientation "horizontal"))
+
+(defwidget row_3 []
+    (box :class "row-1"
+         :orientation "horizontal"))
+
+(defwidget rows []
+    (box :orientation "vertical"
+         (row_1)
+         (row_2)
+         (row_3)))
+
+
+;; == == == Main == == ==
+(defwidget dashboard []
+    (box :class "dashboard-rows"
+         :orientation "horizontal"
+         :space-evenly false
+         :spacing 10
+         :halign "center"
+         :valign "center"
+         (left)
+         (rows)))
+
+(defwindow dashboard
+        :monitor 1
+        :geometry (geometry :x "0%"
+                            :y "0%"
+                            :width "100%"
+                            :height "100%")
+        :stacking "fg"
+        :exclusive true
+        (dashboard))
