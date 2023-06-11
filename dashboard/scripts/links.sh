@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cmd="firefox --new-tab"
+
+if [[ "$1" == "--mail" ]]; then
+    ${cmd} "https://mail.google.com"
+elif [[ "$1" == "--gh" ]]; then
+    ${cmd} "https://github.com"
+elif [[ "$1" == "--rd" ]]; then
+    ${cmd} "https://reddit.com"
+elif [[ "$1" == "--yt" ]]; then
+    ${cmd} "https://youtube.com"
+fi

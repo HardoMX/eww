@@ -1,6 +1,11 @@
 $bg-clr: #2E3440;
 $fg-clr: #D08770;
 $brdr-clr: #D8DEE9;
+$brdr-out: 40px;
+$brdr-norm: 20px;
+$brdr-in: 10px;
+$brdr-sz: 2px;
+$pd: 10px;
 
 * {
     all: unset;
@@ -8,3 +13,197 @@ $brdr-clr: #D8DEE9;
 }
 
 
+.profile {
+    background-color: $bg-clr;
+    border-radius: $brdr-out $brdr-norm $brdr-norm $brdr-norm;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+    border-left: $brdr-sz solid $brdr-clr;
+    border-top: $brdr-sz solid $brdr-clr;
+}
+
+
+.sysinfo {
+    background-color: $bg-clr;
+    border-radius: $brdr-norm $brdr-norm $brdr-norm $brdr-out;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+    border-left: $brdr-sz solid $brdr-clr;
+    border-bottom: $brdr-sz solid $brdr-clr;
+}
+
+
+.time {
+    background-color: $bg-clr;
+    border-radius: $brdr-norm $brdr-norm $brdr-in $brdr-in;
+    margin: 10px 10px 5px 10px;
+    padding: $pd;
+    border-top: $brdr-sz solid $brdr-clr
+}
+.time-time {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: $fg-clr;
+}
+.time-hour {
+    margin: 0px 0px 20px 10px;
+}
+.time-min {
+    margin: 20px 20px 0px 0px;
+}
+.time-date {
+    font-size: 1.5em;
+    min-width: 125px;
+}
+
+
+.uptime {
+    background-color: $bg-clr;
+    border-radius: $brdr-in $brdr-in $brdr-norm $brdr-norm;
+    margin: 5px 10px 10px 10px;
+    padding: $pd;
+}
+
+
+.weather-widget {
+    background-color: $bg-clr;
+    border-radius: $brdr-norm;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+    border-top: $brdr-sz solid $brdr-clr
+}
+
+
+.syscontrols {
+    background-color: $bg-clr;
+    border-radius: $brdr-norm $brdr-out $brdr-norm $brdr-norm;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+    border-right: $brdr-sz solid $brdr-clr;
+    border-top: $brdr-sz solid $brdr-clr;
+}
+.brt-scale trough {
+    background-color: #888888;
+    border-radius: 50px;
+    min-height: 20px;
+    min-width: 200px;
+    margin: 0px 10px 0px 10px;
+}
+.brt-scale trough highlight {
+    background-color: #FFFFFF;
+    color: #000000;
+    border-radius: 10px;
+}
+.vol-scale trough {
+    background-color: #888888;
+    border-radius: 50px;
+    min-height: 20px;
+    min-width: 200px;
+    margin: 0px 10px 0px 10px;
+}
+.vol-scale trough highlight {
+    background-color: #FFFFFF;
+    color: #000000;
+    border-radius: 10px;
+}
+
+
+.music {
+    background-color: $bg-clr;
+    border-radius: $brdr-norm;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+}
+.music-art {
+    border-radius: 10px;
+    background-size: 150px;
+    min-height: 150px;
+    min-width: 150px;
+    margin: 0em 2em 0em 0em;
+}
+.music-info, .music-controls {
+    margin: 0px 2em 0px 0px;
+}
+.music-title {
+    font-size: 1.5em;
+    background-color: #4C566A;
+    border-radius: 8em;
+    padding: 0.5em;
+}
+.music-album {
+    font-size: 0.75em;
+}
+.music-artist {
+    font-size: 1.2em;
+}
+
+
+.apps {
+    background-color: $bg-clr;
+    border-radius: $brdr-norm;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+}
+
+
+.mail {
+    background-color: $bg-clr;
+    border-radius: $brdr-norm;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+    border-bottom: $brdr-sz solid $brdr-clr
+}
+.mails {
+    background-color: #AAAAAA;
+    border-radius: 14px;
+}
+.git {
+    background-color: $bg-clr;
+    border-radius: $brdr-norm;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+    border-bottom: $brdr-sz solid $brdr-clr
+}
+.reddit {
+    background-color: #FF4500;
+    border-radius: $brdr-norm;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+    border-bottom: $brdr-sz solid $brdr-clr
+}
+.yt {
+    background-color: #FF0000;
+    border-radius: $brdr-norm;
+    margin: 10px 10px 10px 10px;
+    padding: $pd;
+    border-bottom: $brdr-sz solid $brdr-clr
+}
+
+
+.pwr-ctrl {
+    margin: 10px 10px 10px 10px;
+}
+.logout {
+    background-color: $bg-clr;
+    border-radius: $brdr-norm $brdr-in $brdr-in $brdr-in;
+    padding: $pd;
+}
+.sleep {
+    background-color: $bg-clr;
+    border-radius: $brdr-in $brdr-norm $brdr-in $brdr-in;
+    padding: $pd;
+    border-right: $brdr-sz solid $brdr-clr
+}
+.restart {
+    background-color: $bg-clr;
+    border-radius: $brdr-in $brdr-in $brdr-in $brdr-norm;
+    padding: $pd;
+    border-bottom: $brdr-sz solid $brdr-clr
+}
+.shutdown {
+    background-color: $bg-clr;
+    border-radius: $brdr-in $brdr-in $brdr-out $brdr-in;
+    padding: $pd;
+    border-right: $brdr-sz solid $brdr-clr;
+    border-bottom: $brdr-sz solid $brdr-clr;
+}

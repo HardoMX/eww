@@ -6,6 +6,8 @@ weather=`curl -sf "http://api.openweathermap.org/data/2.5/weather?APPID="$KEY"&i
 
 if [[ "$1" == "--temp" ]]; then
     echo $weather | jq -r ".main.temp"
+elif [[ "$1" == "--icon" ]]; then
+    echo "./images/icons/weather.png"
 elif [[ "$1" == "--feels" ]]; then
     echo $weather | jq -r ".main.feels_like"
 elif [[ "$1" == "--condition" ]]; then

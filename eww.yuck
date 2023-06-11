@@ -60,7 +60,7 @@
          :space-evenly false
          :spacing 20
          (box :class "calendar-bar-temp"
-              (label :text "${round(weather_temp, 0)}(${weather_feels})°C"))
+              (label :text "${round(weather_temp, 0)}(${round(weather_feels, 0)})°C"))
          (box :class "calendar-bar-weather"
               (label :text {weather_status}))))
 
@@ -80,6 +80,9 @@
 (defwidget calendar_sundial []
     (box :class "calendar-bar-sundial"
          (sundial)))
+(defwidget calendar_day []
+    (box :class "calendar-bar-sundial"
+         (label :text {time.weekday})))
 
 (defwidget calendar_wid []
     (box :class "calendar-wid"
@@ -103,6 +106,7 @@
                          :spacing 10
                          :valign "center"
                          (calendar_time)
+                         (calendar_day)
                          (calendar_sundial)))
                     (weather))))
 
