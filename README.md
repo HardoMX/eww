@@ -5,9 +5,9 @@
     - Pipewire with WirePlumber to control volume
 
 ## To get some features working you need to do the following:
-- Create the file `~/.config/eww/personal/personal.txt`
+- #### Create the file `~/.config/eww/personal/personal.txt`
 - #### For weather:
-    1. Create an accoung and an APPID
+    1. Create an account and an APPID on openweathermap.org
     2. Paste your APPID into the first line of the file
     3. Find the code for your location, the easiest way I found was to download the giant file called city.list.json.gz from [here](http://bulk.openweathermap.org/sample/)
     4. Paste the location code into the second line of your `personal.txt `file
@@ -16,6 +16,8 @@
     2. Create an app password, follow [these](https://support.google.com/mail/answer/185833) instructions
     3. Paste your gmail address into the third line of your `personal.txt` file
     4. Paste your app password into the fourth line
+
+** Note: these steps will be automated in a future install script **
 
 ## The launch scripts included currently might only work on Arch Linux 
 I will look into fixinchecking it for more distros in the future, however, you can still launch all necessary windows from CLI with the command found in the script `eww open-many ...`
