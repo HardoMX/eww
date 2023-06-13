@@ -1,3 +1,4 @@
+
 (defvar separator "|")
 
 
@@ -513,9 +514,10 @@
 
 ;; == == == Main Menu == == ==
 (defwidget menu []
-    (button :onclick "notify-send 'menu :)'"
-        :class "menu"
-        (label :text "menu")))
+    (eventbox :cursor "pointer"
+              :onclick "eww -c ~/.config/eww/dashboard open-many bg dashboard"
+              :class "menu"
+              (label :text "menu")))
 
 
 ;; == == == Main Widget == == ==

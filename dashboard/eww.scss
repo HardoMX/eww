@@ -1,11 +1,37 @@
-$bg-clr: #2E3440;
-$fg-clr: #D08770;
-$brdr-clr: #D8DEE9;
 $brdr-out: 40px;
 $brdr-norm: 20px;
 $brdr-in: 10px;
 $brdr-sz: 2px;
 $pd: 10px;
+
+
+/* Nord Theme Colors */
+
+/* Polar Night */
+$Polar1: #2E3440;
+$Polar2: #3B4252;
+$Polar3: #434C5E;
+$Polar4: #4C556A;
+
+/* Snow Storm */
+$Storm1: #D8DEE9;
+$Storm2: #E5E9F0;
+$Storm3: #ECEFF4;
+
+/* Frost */
+$Frost1: #8FBCBB;
+$Frost2: #88C0D0;
+$Frost3: #81A1C1;
+$Frost4: #5E81AC;
+
+/* Aurora */
+$Aurora1: #BF616A;
+$Aurora2: #D08770;
+$Aurora3: #EBCB8B;
+$Aurora4: #A3BE8C;
+$Aurora5: #B48EAD;
+
+
 
 * {
     all: unset;
@@ -14,36 +40,47 @@ $pd: 10px;
 
 
 .profile {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-out $brdr-norm $brdr-norm $brdr-norm;
-    margin: 10px 10px 10px 10px;
     padding: $pd;
-    border-left: $brdr-sz solid $brdr-clr;
-    border-top: $brdr-sz solid $brdr-clr;
+    border-left: $brdr-sz solid $Storm1;
+    border-top: $brdr-sz solid $Storm1;
+    font-size: 2em;
+    color: $Frost3;
 }
 
 
 .sysinfo {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-norm $brdr-norm $brdr-norm $brdr-out;
-    margin: 10px 10px 10px 10px;
     padding: $pd;
-    border-left: $brdr-sz solid $brdr-clr;
-    border-bottom: $brdr-sz solid $brdr-clr;
+    border-left: $brdr-sz solid $Storm1;
+    border-bottom: $brdr-sz solid $Storm1;
+}
+.cpu {
+    color: $Aurora3;
+}
+.mem {
+    color: $Aurora4;
+}
+.disk {
+    color: $Aurora5;
+}
+.cpu-title, .mem-title, .disk-title {
+    font-size: 1.5em;
 }
 
 
 .time {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-norm $brdr-norm $brdr-in $brdr-in;
-    margin: 10px 10px 5px 10px;
     padding: $pd;
-    border-top: $brdr-sz solid $brdr-clr
+    border-top: $brdr-sz solid $Storm1
 }
 .time-time {
     font-size: 2.5em;
     font-weight: bold;
-    color: $fg-clr;
+    color: $Aurora2;
 }
 .time-hour {
     margin: 0px 0px 20px 10px;
@@ -54,156 +91,183 @@ $pd: 10px;
 .time-date {
     font-size: 1.5em;
     min-width: 125px;
+    color: $Frost4;
 }
 
 
 .uptime {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-in $brdr-in $brdr-norm $brdr-norm;
-    margin: 5px 10px 10px 10px;
     padding: $pd;
+    font-size: 1.5em;
+    color: $Aurora4;
 }
 
 
 .weather-widget {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-norm;
-    margin: 10px 10px 10px 10px;
     padding: $pd;
-    border-top: $brdr-sz solid $brdr-clr
+    border-top: $brdr-sz solid $Storm1
+}
+.weather-temp {
+    font-size: 3em;
+    color: $Aurora4;
+
+    background-color: $Polar3;
+    border-radius: $brdr-norm;
 }
 
 
 .syscontrols {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-norm $brdr-out $brdr-norm $brdr-norm;
-    margin: 10px 10px 10px 10px;
     padding: $pd;
-    border-right: $brdr-sz solid $brdr-clr;
-    border-top: $brdr-sz solid $brdr-clr;
+    border-right: $brdr-sz solid $Storm1;
+    border-top: $brdr-sz solid $Storm1;
 }
 .brt-scale trough {
-    background-color: #888888;
+    background-color: $Polar4;
     border-radius: 50px;
     min-height: 20px;
-    min-width: 200px;
+    min-width: 150px;
     margin: 0px 10px 0px 10px;
 }
 .brt-scale trough highlight {
-    background-color: #FFFFFF;
+    background-color: $Storm2;
     color: #000000;
     border-radius: 10px;
 }
 .vol-scale trough {
-    background-color: #888888;
+    background-color: $Polar4;
     border-radius: 50px;
     min-height: 20px;
-    min-width: 200px;
+    min-width: 150px;
     margin: 0px 10px 0px 10px;
 }
 .vol-scale trough highlight {
-    background-color: #FFFFFF;
+    background-color: $Storm2;
     color: #000000;
     border-radius: 10px;
 }
 
 
 .music {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-norm;
-    margin: 10px 10px 10px 10px;
     padding: $pd;
+    min-width: 440px;
 }
 .music-art {
     border-radius: 10px;
     background-size: 150px;
     min-height: 150px;
     min-width: 150px;
-    margin: 0em 2em 0em 0em;
 }
 .music-info, .music-controls {
     margin: 0px 2em 0px 0px;
 }
 .music-title {
     font-size: 1.5em;
+    color: $Storm1;
+
     background-color: #4C566A;
     border-radius: 8em;
     padding: 0.5em;
 }
 .music-album {
     font-size: 0.75em;
+    color: $Aurora5;
 }
 .music-artist {
     font-size: 1.2em;
+    color: $Aurora3;
+}
+
+
+.folders {
+    background-color: $Polar1;
+    border-radius: $brdr-norm;
+    padding: $pd;
+}
+.folder-Documents {
+    color: $Aurora2;
+    font-size: 1.4em;
+}
+.folder-Downloads {
+    color: $Aurora3;
+    font-size: 1.4em;
+}
+.folder-Pictures {
+    color: $Frost3;
+    font-size: 1.4em;
+}
+.folder-config {
+    color: $Frost2;
+    font-size: 1.4em;
 }
 
 
 .apps {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-norm;
-    margin: 10px 10px 10px 10px;
+    border-right: $brdr-sz solid $Storm1;
     padding: $pd;
 }
 
 
+
 .mail {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-norm;
-    margin: 10px 10px 10px 10px;
     padding: $pd;
-    border-bottom: $brdr-sz solid $brdr-clr
+    border-bottom: $brdr-sz solid $Storm1
 }
 .mails {
     background-color: #AAAAAA;
     border-radius: 14px;
 }
 .git {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-norm;
-    margin: 10px 10px 10px 10px;
     padding: $pd;
-    border-bottom: $brdr-sz solid $brdr-clr
+    border-bottom: $brdr-sz solid $Storm1
 }
 .reddit {
     background-color: #FF4500;
     border-radius: $brdr-norm;
-    margin: 10px 10px 10px 10px;
     padding: $pd;
-    border-bottom: $brdr-sz solid $brdr-clr
+    border-bottom: $brdr-sz solid $Storm1
 }
 .yt {
     background-color: #FF0000;
     border-radius: $brdr-norm;
-    margin: 10px 10px 10px 10px;
     padding: $pd;
-    border-bottom: $brdr-sz solid $brdr-clr
+    border-bottom: $brdr-sz solid $Storm1
 }
 
 
-.pwr-ctrl {
-    margin: 10px 10px 10px 10px;
-}
 .logout {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-norm $brdr-in $brdr-in $brdr-in;
     padding: $pd;
 }
 .sleep {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-in $brdr-norm $brdr-in $brdr-in;
     padding: $pd;
-    border-right: $brdr-sz solid $brdr-clr
+    border-right: $brdr-sz solid $Storm1
 }
 .restart {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-in $brdr-in $brdr-in $brdr-norm;
     padding: $pd;
-    border-bottom: $brdr-sz solid $brdr-clr
+    border-bottom: $brdr-sz solid $Storm1
 }
 .shutdown {
-    background-color: $bg-clr;
+    background-color: $Polar1;
     border-radius: $brdr-in $brdr-in $brdr-out $brdr-in;
     padding: $pd;
-    border-right: $brdr-sz solid $brdr-clr;
-    border-bottom: $brdr-sz solid $brdr-clr;
+    border-right: $brdr-sz solid $Storm1;
+    border-bottom: $brdr-sz solid $Storm1;
 }

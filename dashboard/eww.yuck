@@ -21,7 +21,7 @@
     (box :class "cpu"
          :orientation "vertical"
          :space-evenly false
-         :spacing 20
+         :spacing 10
          (circular-progress :class "cpu-circle"
                             :value {EWW_CPU.avg}
                             :thickness 10
@@ -37,7 +37,7 @@
     (box :class "mem"
          :orientation "vertical"
          :space-evenly false
-         :spacing 20
+         :spacing 10
          (circular-progress :class "mem-circle"
                             :value {EWW_RAM.used_mem/1000000000*100/32} ;;Needs improvement for dynamic memory amount
                             :thickness 10
@@ -53,7 +53,7 @@
     (box :class "disk"
          :orientation "vertical"
          :space-evenly false
-         :spacing 20
+         :spacing 10
          (circular-progress :class "disk-circle"
                             :value {EWW_DISK["/"].used_perc}
                             :thickness 10
@@ -158,6 +158,7 @@
 (defwidget timings []
     (box :class "timings"
          :orientation "vertical"
+         :spacing 10
          (time)
          (uptime)))
 
@@ -182,7 +183,7 @@
                      :image-width 100
                      :image-height 100)
               (label :class "weather-temp"
-                     :text {temp}))
+                     :text "${round(temp, 0)}°C"))
          (box :class "weather-condition"
               :orientation "vertical"
               (label :class "weather-cond-text"
@@ -249,6 +250,7 @@
          :orientation "vertical"
          :space-evenly false
          :spacing 7
+         :halign "center"
          (label :class "music-title"
                 :limit-width 10
                 :text {music_status == "PLAYING" || music_status == "PAUSED" ? music_title : "..."})
@@ -295,6 +297,8 @@
     (box :class "music"
          :orientation "horizontal"
          :space-evenly false
+         :spacing 20
+         :halign "start"
          (box :class "music-art"
               :width 10
               :style "background-image: url('${strlength(music_art) > 0 ? replace(music_art, 'file:/', '') : no_music}');")
@@ -302,8 +306,53 @@
               :orientation "vertical"
               :space-evenly false
               :spacing 7
+              :width 270
               (music_info)
               (music_controls))))
+
+
+;; == == == Folders == == ==
+(defwidget folders []
+    (box :class "folders"
+         :orientation "vertical"
+         :spacing 10
+         :halign "center"
+         (eventbox :cursor "pointer"
+                    :onclick "./scripts/folders.sh --doc"
+                    (box :class "folder-Documents"
+                    :orientation "horizontal"
+                    :space-evenly false
+                    :spacing 20
+                    (image :path "./images/icons/Folders/Documents.png"
+                            :image-width 20)
+                    (label :text "Documents")))
+         (eventbox :cursor "pointer"
+                    :onclick "./scripts/folders.sh --dl"
+                    (box :class "folder-Downloads"
+                    :orientation "horizontal"
+                    :space-evenly false
+                    :spacing 20
+                    (image :path "./images/icons/Folders/Downloads.png"
+                            :image-width 20)
+                    (label :text "Downloads")))
+         (eventbox :cursor "pointer"
+                    :onclick "./scripts/folders.sh --pics"
+                    (box :class "folder-Pictures"
+                    :orientation "horizontal"
+                    :space-evenly false
+                    :spacing 20
+                    (image :path "./images/icons/Folders/Pictures.png"
+                            :image-width 20)
+                    (label :text "Pictures")))
+         (eventbox :cursor "pointer"
+                    :onclick "./scripts/folders.sh --conf"
+                    (box :class "folder-config"
+                    :orientation "horizontal"
+                    :space-evenly false
+                    :spacing 20
+                    (image :path "./images/icons/Folders/config.png"
+                            :image-width 20)
+                    (label :text ".config")))))
 
 
 ;; == == == Apps == == ==
@@ -311,25 +360,65 @@
     (box :class "apps"
          :orientation "vertical"
          :spacing 10
+         :halign "end"
          (box :class "apps-row-1"
-              :spacing 10
-              (label :text "app 1")
-              (label :text "app 2")
-              (label :text "app 3")
-              (label :text "app 4"))
+              :width 50
+              (eventbox :class "file-manager"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --fs"
+                        (image :path "./images/icons/apps/file-manager.png"
+                                :image-width 40))
+              (eventbox :class "terminal"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --term"
+                        (image :path "./images/icons/apps/terminal.png"
+                                :image-width 40))
+              (eventbox :class "firefox"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --ff"
+                        (image :path "./images/icons/apps/firefox.png"
+                                :image-width 40)))
          (box :class "apps-row-2"
-              :spacing 10
-              (label :text "app 5")
-              (label :text "app 6")
-              (label :text "app 7")
-              (label :text "app 8"))
+              :spacing 20
+              (eventbox :class "nvim"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --nvim"
+                        (image :path "./images/icons/apps/neovim.png"
+                                :image-width 37))
+              (eventbox :class "vscode"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --vscode"
+                        (image :path "./images/icons/apps/vscode.png"
+                                :image-width 37))
+              (eventbox :class "gimp"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --gimp"
+                        (image :path "./images/icons/apps/gimp.png"
+                                :image-width 37)))
          (box :class "apps-row-3"
-              :spacing 10
-              (label :text "app 9")
-              (label :text "app 10")
-              (label :text "app 11")
-              (label :text "app 12"))))
+              :spacing 20
+              (eventbox :class "discord"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --discord"
+                        (image :path "./images/icons/apps/discord.png"
+                                :image-width 37))
+              (eventbox :class "vbox"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --vbox"
+                        (image :path "./images/icons/apps/virtualbox.png"
+                                :image-width 37)))))
 
+
+(defpoll mails :interval "10m"
+    "./scripts/mails.py")
 
 ;; == == == Sites == == ==
 (defwidget mail []
@@ -339,27 +428,27 @@
                     :orientation "vertical"
                     :space-evenly false
                     :spacing 10
-                    :width 175
+                    :width 100
 
              (image :path "./images/icons/gmail.png"
                     :image-width 85
                     :image-height 85)
              (label :class "mails"
-                    :text "mails"
+                    :text "${mails}"
                     :height 30))))
 (defwidget git []
     (eventbox :cursor "pointer"
               :onclick "./scripts/links.sh --gh"
               (box :class "git"
-                   :width 175
+                   :width 100
                    (image :path "./images/icons/github.png"
                           :image-width 100
                           :image-height 100))))
 (defwidget reddit []
     (eventbox :cursor "pointer"
-              :onclick "./sccripts/links.sh --rd"
+              :onclick "./scripts/links.sh --rd"
               (box :class "reddit"
-              :width 175
+              :width 100
               (image :path "./images/icons/reddit.png"
                      :image-width 100
                      :image-height 100))))
@@ -367,7 +456,7 @@
     (eventbox :cursor "pointer"
               :onclick "./scripts/links.sh --yt"
               (box :class "yt"
-                    :width 175
+                    :width 100
                     (image :path "./images/icons/youtube(1).png"
                             :image-width 100
                             :image-height 100))))
@@ -429,13 +518,15 @@
     (box :class "left"
          :orientation "vertical"
          :space-evenly false
+         :spacing 20
          (profile)
          (sysinfo)))
 
 (defwidget row_1 []
     (box :class "row-1"
          :orientation "horizontal"
-         :space-evenly false
+         :space-evenly true
+         :spacing 20
          (timings)
          (weather)
          (syscontrols)))
@@ -443,13 +534,17 @@
 (defwidget row_2 []
     (box :class "row-1"
          :orientation "horizontal"
+         :space-evenly false
+         :spacing 20
          (music)
+         (folders)
          (apps)))
 
 (defwidget row_3 []
     (box :class "row-1"
          :orientation "horizontal"
-         :space-evenly false
+         :space-evenly true
+         :spacing 20
          (mail)
          (git)
          (reddit)
@@ -459,6 +554,7 @@
 (defwidget rows []
     (box :orientation "vertical"
          :space-evenly false
+         :spacing 20
          (row_1)
          (row_2)
          (row_3)))
@@ -469,6 +565,7 @@
     (box :class "dashboard-rows"
          :orientation "horizontal"
          :space-evenly false
+         :spacing 20
          :halign "center"
          :valign "center"
          (left)
@@ -478,8 +575,24 @@
         :monitor 1
         :geometry (geometry :x "0%"
                             :y "0%"
+                            :width "0%"
+                            :height "0%"
+                            :anchor "center center")
+        :stacking "overlay"
+        :exclusive true
+        (dashboard))
+
+(defwidget background [] 
+    (eventbox :onclick "eww -c ${EWW_CONFIG_DIR} close dashboard bg"
+              (image :path "./images/backgrounds/sky.jpg"
+                     :image-width 3440)))
+
+(defwindow bg
+        :monitor 1
+        :geometry (geometry :x "0%"
+                            :y "0%"
                             :width "100%"
                             :height "100%")
         :stacking "fg"
-        :exclusive true
-        (dashboard))
+        :exlusive false
+        (background))
