@@ -10,7 +10,7 @@
     1. Create an accoung and an APPID
     2. Paste your APPID into the first line of the file
     3. Find the code for your location, the easiest way I found was to download the giant file called city.list.json.gz from [here](http://bulk.openweathermap.org/sample/)
-    4. Paste the loaction code into the second line of your `personal.txt `file
+    4. Paste the location code into the second line of your `personal.txt `file
 - #### For gmail integration:
     1. Make sure IMAP is turned on in gmail
     2. Create an app password, follow [these](https://support.google.com/mail/answer/185833) instructions
