@@ -119,6 +119,7 @@
     (box :class "time"
          :orientation "horizontal"
          :space-evenly false
+         :spacing -15
          (box :class "time-time"
               :orientation "horizontal"
               ;(label :class "time-hour"
@@ -144,6 +145,8 @@
 (defwidget uptime []
     (box :class "uptime"
          :orientation "horizontal"
+         :space-evenly false
+         :spacing 10
          (box :class "uptime-icon"
               (image :path "./images/icons/uptime.png"
                      :image-width 75
@@ -166,10 +169,17 @@
 ;; == == == Weather == == ==
 (defpoll temp :interval "15m"
     "./scripts/weather.sh --temp")
-(defpoll icon :interval "15m"
-    "./scripts/weather.sh --icon")
 (defpoll condition :interval "15m"
     "./scripts/weather.sh --condition")
+
+(defpoll weather_icon :interval "15m"
+    "./scripts/weather-icon.sh --icon")
+(defpoll weather_quote :interval "15m"
+    "./scripts/weather-icon.sh --quote")
+(defpoll weather_quote2 :interval "15m"
+    "./scripts/weather-icon.sh --quote2")
+(defpoll weather_hex :interval "15m"
+    "./scripts/weather-icon.sh --hex")
 
 (defwidget weather []
     (box :class "weather-widget"
@@ -178,54 +188,70 @@
          :spacing 10
          (box :class "weather-weather"
               :orientation "horizontal"
-              (image :class "weather-icon"
-                     :path {icon}
-                     :image-width 100
-                     :image-height 100)
+              (label :class "weather-icon"
+                     :text {weather_icon}
+                     :style "color: ${weather_hex}")
               (label :class "weather-temp"
                      :text "${round(temp, 0)}°C"))
          (box :class "weather-condition"
               :orientation "vertical"
               (label :class "weather-cond-text"
-                     :text {condition}))))
+                     :text {condition}
+                     :style "color: ${weather_hex}")
+              (label :class "weather-quote"
+                     :text {weather_quote}
+                     :style "color: ${weather_hex}")
+              (label :class "weather-quote2"
+                     :text {weather_quote2}
+                     :style "color: ${weather_hex}"))))
 
 
 ;; == == == Syscontrol == == ==
 (defvar mute false)
+(defpoll vol_perc :interval "1s"
+    "wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr -d 'Volume: ' | tr -d '[MUTED]'")
+
 
 (defwidget brightness []
     (box :class "brightness"
-         :orientation "horizontal"
+         :orientation "vertical"
          :space-evenly false
-         :spacing 30
-         (image :class "brt-icon"
-                :path "./images/icons/brightness.png"
-                :image-width 50
-                :image-height 50)
+         :spacing 10
          (scale :class "brt-scale"
                 :value 50
                 :min 0
-                :max 99)))
+                :max 99
+                :orientation "vertical"
+                :flipped true)
+         (image :class "brt-icon"
+                :path "./images/icons/brightness.png"
+                :image-width 40
+                :image-height 40)))
+
 (defwidget volume []
     (box :class "volume"
-         :orientation "horizontal"
+         :orientation "vertical"
          :space-evenly false
-         :spacing 30
+         :spacing 13
+         (scale :class "vol-scale"
+                :value {vol_perc*100}
+                :min 0
+                :max 99
+                :orientation "vertical"
+                :flipped true
+                :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")
          (eventbox :class "vol-mute"
                     :onclick "eww update mute=${!mute} && wpctl set-mute @DEFAULT_AUDIO_SINK@ ${!mute ? '1' : '0'}" ;; No worky
                     :cursor "pointer"
              (image :class "vol-icon"
                     :path {!mute == true ? "./images/icons/volume.png" : "./images/icons/mute.png"}
-                    :image-width 50
-                    :image-height 50))
-         (scale :class "vol-scale"
-                :value 69
-                :min 0
-                :max 99)))
+                    :image-width 35
+                    :image-height 35))))
+
 
 (defwidget syscontrols []
     (box :class "syscontrols"
-         :orientation "vertical"
+         :orientation "horizontal"
          :space-evenly false
          :spacing 30
          (brightness)
@@ -468,6 +494,7 @@
          :height 75
          (eventbox :class "logout"
                    :cursor "pointer"
+                   :onclick "systemctl"
                    (image :path "./images/icons/logout.png"
                           :image-width 50
                           :image-height 50))))
@@ -476,6 +503,7 @@
          :height 75
          (eventbox :class "sleep"
                    :cursor "pointer"
+                   :onclick "systemctl suspend"
                    (image :path "./images/icons/sleep.png"
                           :image-width 50
                           :image-height 50))))
@@ -484,6 +512,7 @@
          :height 75
          (eventbox :class "restart"
                    :cursor "pointer"
+                   :onclick "systemctl reboot"
                    (image :path "./images/icons/rotate.png"
                           :image-width 50
                           :image-height 50))))
@@ -492,6 +521,7 @@
          :height 75
          (eventbox :class "shutdown"
                    :cursor "pointer"
+                   :onclick "systemctl poweroff"
                    (image :path "./images/icons/power-off.png"
                           :image-width 50
                           :image-height 50))))
@@ -525,7 +555,7 @@
 (defwidget row_1 []
     (box :class "row-1"
          :orientation "horizontal"
-         :space-evenly true
+         :space-evenly false
          :spacing 20
          (timings)
          (weather)
@@ -572,7 +602,7 @@
          (rows)))
 
 (defwindow dashboard
-        :monitor 1
+        :monitor 0
         :geometry (geometry :x "0%"
                             :y "0%"
                             :width "0%"
@@ -588,7 +618,7 @@
                      :image-width 3440)))
 
 (defwindow bg
-        :monitor 1
+        :monitor 0
         :geometry (geometry :x "0%"
                             :y "0%"
                             :width "100%"

@@ -515,7 +515,7 @@
 ;; == == == Main Menu == == ==
 (defwidget menu []
     (eventbox :cursor "pointer"
-              :onclick "eww -c ~/.config/eww/dashboard open-many bg dashboard"
+              :onclick "./dashboard/launch_dash.sh"
               :class "menu"
               (label :text "menu")))
 

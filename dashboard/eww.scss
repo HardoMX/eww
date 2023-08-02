@@ -108,7 +108,8 @@ $Aurora5: #B48EAD;
     background-color: $Polar1;
     border-radius: $brdr-norm;
     padding: $pd;
-    border-top: $brdr-sz solid $Storm1
+    border-top: $brdr-sz solid $Storm1;
+    min-width: 30.5em;
 }
 .weather-temp {
     font-size: 3em;
@@ -116,6 +117,18 @@ $Aurora5: #B48EAD;
 
     background-color: $Polar3;
     border-radius: $brdr-norm;
+}
+.weather-icon {
+    font-size: 3em;
+}
+.weather-cond-text {
+    font-size: 2em;
+}
+.weather-quote {
+    font-size: 1.15em;
+}
+.weather-quote2 {
+    font-size: 0.9em;
 }
 
 
@@ -129,8 +142,8 @@ $Aurora5: #B48EAD;
 .brt-scale trough {
     background-color: $Polar4;
     border-radius: 50px;
-    min-height: 20px;
-    min-width: 150px;
+    min-height: 125px;
+    min-width: 20px;
     margin: 0px 10px 0px 10px;
 }
 .brt-scale trough highlight {
@@ -141,8 +154,8 @@ $Aurora5: #B48EAD;
 .vol-scale trough {
     background-color: $Polar4;
     border-radius: 50px;
-    min-height: 20px;
-    min-width: 150px;
+    min-height: 125px;
+    min-width: 20px;
     margin: 0px 10px 0px 10px;
 }
 .vol-scale trough highlight {
@@ -193,18 +206,22 @@ $Aurora5: #B48EAD;
 .folder-Documents {
     color: $Aurora2;
     font-size: 1.4em;
+    margin: 0em 0.5em 0em 0.5em
 }
 .folder-Downloads {
     color: $Aurora3;
     font-size: 1.4em;
+    margin: 0em 0.5em 0em 0.5em
 }
 .folder-Pictures {
     color: $Frost3;
     font-size: 1.4em;
+    margin: 0em 0.5em 0em 0.5em
 }
 .folder-config {
     color: $Frost2;
     font-size: 1.4em;
+    margin: 0em 0.5em 0em 0.5em
 }
 
 
@@ -226,6 +243,8 @@ $Aurora5: #B48EAD;
 .mails {
     background-color: #AAAAAA;
     border-radius: 14px;
+    font-size: 1.3em;
+    color: $Storm1;
 }
 .git {
     background-color: $Polar1;
