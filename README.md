@@ -1,3 +1,5 @@
+# This will be the new and improved version of my EWW config, starting from scratch as soon as I have the time
+
 ### Necessary programs:
     - EWW (of course)
     - playerctl to see and control music
