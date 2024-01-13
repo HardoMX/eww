@@ -1,9 +1,6 @@
 #!/bin/bash
 
-config="$HOME/.config/eww/dashboard"
-EWW="/usr/bin/eww"
-
-weather=`$HOME/.config/eww/dashboard/scripts/weather.sh --icon`
+weather=`./weather.sh --icon`
 
 day="#A3BE8C"
 night="#B48EAD"

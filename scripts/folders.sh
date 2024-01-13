@@ -1,8 +1,6 @@
 #!/bin/bash
 
-config="$HOME/.config/eww/dashboard"
-EWW="/usr/bin/eww -c ${config}"
-close="${EWW} close dashboard bg"
+close="eww close dashboard"
 
 if [[ "$1" == "--doc" ]]; then
     thunar ~/Documents &
@@ -17,5 +15,5 @@ elif [[ "$1" == "--conf" ]]; then
     thunar ~/.config &
     $close
 else
-    notify-send 'somethin went wrong'
+    notify-send 'somethin with "folders.sh" went wrong'
 fi

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-config="$HOME/.config/eww/dashboard"
-EWW="/usr/bin/eww -c ${config}"
-close="${EWW} close dashboard bg"
-
+close="eww close dashboard"
 cmd="firefox --new-tab"
 
-if [[ "$1" == "--mail" ]]; then
+if [[ "$1" == "--gmail" ]]; then
     ${cmd} "https://mail.google.com"
+    $close
+elif [[ "$1" == "--pmail" ]]; then
+    ${cmd} "https://mail.proton.me"
     $close
 elif [[ "$1" == "--gh" ]]; then
     ${cmd} "https://github.com"

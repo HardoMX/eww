@@ -1,0 +1,57 @@
+;; This file sets up all non-magic variables
+
+;; == == == Weather == == ==
+(defpoll weather_temp :interval "15m"
+    "./scripts/weather.sh --temp")
+(defpoll weather_feels :interval "15m"
+    "./scripts/weather.sh --feels")
+(defpoll weather_status :interval "15m"
+    "./scripts/weather.sh --condition")
+(defpoll weather_locale :interval "15m"
+    "./scripts/weather.sh --locale")
+
+; == == == Weather Icon == == ==
+(defpoll weather_icon :interval "15m"
+    "./scripts/weather-icon.sh --icon")
+(defpoll weather_quote :interval "15m"
+    "./scripts/weather-icon.sh --quote")
+(defpoll weather_quote2 :interval "15m"
+    "./scripts/weather-icon.sh --quote2")
+(defpoll weather_hex :interval "15m"
+    "./scripts/weather-icon.sh --hex")
+
+; == == == System == == ==
+(defpoll user :interval "24h"
+    "whoami")
+(defpoll uphour :interval "5m"
+    "uptime -p | awk '{print $2}'")
+(defpoll upminut :interval "5s"
+    "uptime -p | awk '{print $4}'")
+
+; == == == Media == == ==
+(defvar mute false)
+(defpoll vol_perc :interval "1s"
+    "wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr -d 'Volume: ' | tr -d '[MUTED]'")
+
+(deflisten music_status :initial ""
+    "playerctl --follow status --format '{{ uc(status) }}' || true")
+(deflisten music_artist :initial ""
+    "playerctl --follow status --format '{{ artist }}' || true")
+(deflisten music_title :initial ""
+    "playerctl --follow status --format '{{ title }}' || true")
+(deflisten music_album :initial ""
+    "playerctl --follow status --format '{{ album }}' || true")
+(deflisten music_image :initial ""
+    "playerctl --follow status --format '{{ mpris:artUrl }}' || true")
+(deflisten music_progress :initial ""
+    "playerctl --follow status --format '{{ duration(position) }}' || true")
+(deflisten music_length :initial ""
+    "playerctl --follow status --format '{{ duration(mpris:length) }}' || true")
+
+; == == == Hyprland == == ==
+(deflisten workspaces :initial "[]"
+    "./scripts/get-workspaces.sh")
+(deflisten current_workspace :initial "1"
+    "./scripts/get-active-workspace.sh")
+(deflisten window :initial "..."
+    "./scripts/get-window-title.sh")

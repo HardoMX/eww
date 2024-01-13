@@ -1,8 +1,6 @@
 #!/bin/bash
 
-config="$HOME/.config/eww/dashboard"
-EWW="/usr/bin/eww -c ${config}"
-close="${EWW} close dashboard bg"
+close="eww close dashboard"
 
 if [[ "$1" == "--fs" ]]; then
     if ! command -v thunar &> /dev/null 
@@ -77,5 +75,6 @@ elif [[ "$1" == "--ff" ]]; then
         $close
     fi
 else
+    notify-send 'Something with "apps.sh" went wrong'
     echo 'error'
 fi
