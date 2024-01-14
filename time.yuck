@@ -1,0 +1,46 @@
+;; == == == Variable == == ==
+(defpoll weather_temp :interval "15m"
+    "./scripts/weather.sh --temp")
+(defpoll weather_feels :interval "15m"
+    "./scripts/weather.sh --feels")
+(defpoll weather_status :interval "15m"
+    "./scripts/weather.sh --condition")
+(defpoll weather_locale :interval "15m"
+    "./scripts/weather.sh --locale")
+
+; == == == Widgets == == ==
+(defwidget time_short []
+    (label :class "time-short"
+           :tooltip "${formattime(EWW_TIME, "%H:%M:%S, %A")}"
+           :text {formattime(EWW_TIME, "%H:%M")}
+    )
+)
+
+(defwidget time_long []
+    (label :class "time-long"
+           :text {formattime(EWW_TIME, "%H:%M:%S")}
+    )
+)
+
+(defwidget sundial []
+    (label :text {formattime(EWW_TIME, "%H") >= 5 && formattime(EWW_TIME, "%H") < 11 ? "Morning" : 
+                  formattime(EWW_TIME, "%H") >= 11 && formattime(EWW_TIME, "%H") < 13 ? "Prenoon" : 
+                  formattime(EWW_TIME, "%H") >= 13 && formattime(EWW_TIME, "%H") < 15 ? "Lunch" : 
+                  formattime(EWW_TIME, "%H") >= 15 && formattime(EWW_TIME, "%H") < 19 ? "Afternoon" : 
+                  formattime(EWW_TIME, "%H") >= 19 && formattime(EWW_TIME, "%H") < 22 ? "Evening" : "Night"}
+    )
+)
+
+
+; == == == Date == == ==
+(defwidget date_short []
+    (label :class "date-short"
+           :text {formattime(EWW_TIME, "%Y-%m-%d")}
+    )
+)
+
+(defwidget date_long []
+    (label :class "date-long"
+           :text {formattime(EWW_TIME, "%A, %B %d, %Y")}
+    )
+)

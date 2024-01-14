@@ -1,7 +1,7 @@
 #!/bin/bash
 
-KEY=`sed '1!d' ../secret.txt`
-ID=`sed '2!d' ../secret.txt`
+KEY=`sed '1!d' ./secret.txt`
+ID=`sed '2!d' ./secret.txt`
 UNIT="metric"
 
 weather=`curl -sf "http://api.openweathermap.org/data/2.5/weather?APPID="$KEY"&id="$ID"&units="$UNIT`

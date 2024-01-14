@@ -1,6 +1,7 @@
 #!/bin/bash
 
-close="eww close dashboard"
+eww_executable="~/eww/target/release/eww"
+close="$eww_executable close dashboard"
 cmd="firefox --new-tab"
 
 if [[ "$1" == "--gmail" ]]; then

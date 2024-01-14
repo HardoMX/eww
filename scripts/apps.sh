@@ -1,6 +1,7 @@
 #!/bin/bash
 
-close="eww close dashboard"
+eww_executable="~/eww/target/release/eww"
+close="$eww_executable close dashboard"
 
 if [[ "$1" == "--fs" ]]; then
     if ! command -v thunar &> /dev/null 
@@ -73,6 +74,15 @@ elif [[ "$1" == "--ff" ]]; then
     else
         firefox &
         $close
+    fi
+elif [[ "$1" == "--steam" ]]; then
+    if ! command -v steam &> /dev/null
+    then
+        notify-send "Steam seems to not be installed"
+        echo "Steam seems to not be installed"
+    else
+        steam &
+        $clsoe
     fi
 else
     notify-send 'Something with "apps.sh" went wrong'

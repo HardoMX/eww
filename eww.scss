@@ -1,0 +1,27 @@
+* {
+    all: unset;
+    font-family: "Noto Sans";
+    font-size: 1.3rem;
+}
+
+.segment {
+    background-color: #AAAAAA;
+
+    border: solid #00FFFF 0.2rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+    
+    padding: 0 1rem 0 1rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.middle-weather {
+    font-size: 2rem;
+    margin: 0;
+}
+
+
+@import "widgets.scss"

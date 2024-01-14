@@ -1,0 +1,19 @@
+; == == == Variables == == ==
+(defpoll weather_icon :interval "15m"
+    "./scripts/weather-icon.sh --icon")
+(defpoll weather_quote :interval "15m"
+    "./scripts/weather-icon.sh --quote")
+(defpoll weather_quote2 :interval "15m"
+    "./scripts/weather-icon.sh --quote2")
+(defpoll weather_hex :interval "15m"
+    "./scripts/weather-icon.sh --hex")
+
+; == == == Widgets == == ==
+(defwidget weather_short []
+    (label :class "weather-short"
+           :tooltip "Temperature / Feels like / ${weather_status}"
+           :text "${weather_temp}°C/${weather_feels}°C/${weather_icon}"
+    )
+)
+
+; Make full widget after design is finished

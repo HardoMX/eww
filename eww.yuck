@@ -1,12 +1,63 @@
 (include "./widgets.yuck")
 
-(defwindow test
+
+; == == == Full widgets == == ==
+(defwidget left []
+    (box :class "left segment"
+         :orientation "horizontal"
+         :space-evenly false
+         :spacing 20
+         :halign "start"
+         (menu)
+         (window_w)
+         (workspaces)
+    )
+)
+
+(defwidget middle []
+    (box :class "middle segment"
+         :orientation "horizontal"
+         :space-evenly false
+         :spacing 20
+         :halign "center"
+         (time_short)
+         (label :class "middle-weather"
+                :tooltip "Is ${weather_temp}°C / Feels like ${weather_feels}°C / ${weather_status}"
+                :text {weather_icon})
+    )
+)
+
+(defwidget right []
+    (box :class "right segment"
+         :orientation "horizontal"
+         :space-evenly false
+         :spacing 20
+         :halign "end"
+         (volume)
+         (media_control :space -10)
+         (music_short)
+    )
+)
+
+(defwidget bar []
+    (centerbox :class "bar"
+         :orientation "horizontal"
+         (left)
+         (middle)
+         (right)
+    )
+)
+
+
+; == == == Windows == == ==
+(defwindow bar
     :monitor 0
     :geometry (geometry :x "0%"
-                        :y "5px"
-                        :width "96%"
+                        :y "0%"
+                        :width "99%"
                         :height "2%"
                         :anchor "top center")
     :stacking "fg"
     :exclusive true
-    (time_short))
+    (bar)
+)

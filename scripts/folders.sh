@@ -1,6 +1,7 @@
 #!/bin/bash
 
-close="eww close dashboard"
+eww_executable="~/eww/target/release/eww"
+close="$eww_executable close dashboard"
 
 if [[ "$1" == "--doc" ]]; then
     thunar ~/Documents &

@@ -1,0 +1,111 @@
+; == == == Variables == == ==
+(defvar mute false)
+(defpoll vol_perc :interval "1s"
+    "wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr -d 'Volume: ' | tr -d '[MUTED]'")
+
+(deflisten music_status :initial ""
+    "playerctl --follow status --format '{{ uc(status) }}' || true")
+(deflisten music_artist :initial ""
+    "playerctl --follow metadata --format '{{ artist }}' || true")
+(deflisten music_title :initial ""
+    "playerctl --follow metadata status --format '{{ title }}' || true")
+(deflisten music_album :initial ""
+    "playerctl --follow metadata status --format '{{ album }}' || true")
+(deflisten music_image :initial ""
+    "playerctl --follow metadata status --format '{{ mpris:artUrl }}' || true")
+(deflisten music_progress :initial ""
+    "playerctl --follow metadata status --format '{{ duration(position) }}' || true")
+(deflisten music_length :initial ""
+    "playerctl --follow metadata status --format '{{ duration(mpris:length) }}' || true")
+
+; == == == Widgets == == ==
+; Playback control
+(defwidget media_control [space]
+    (box :class "music-control"
+         :orientation "horizontal"
+         :halign "center"
+         :space-evenly false
+         :spacing {space}
+         (eventbox :class "media-prev"
+                   :onclick "playerctl previous"
+                   :cursor "pointer"
+                   :width 30
+                   :height 30
+                   :tooltip "Prevoius track"
+                   (label :text "")
+         )
+         (eventbox :class "media-play"
+                   :onclick "playerctl play-pause"
+                   :cursor "pointer"
+                   :width 30
+                   :tooltip {music_status == "PLAYING" ? "Pause" : "Play"}
+                   (label :text {music_status == "PLAYING" ? "" : ""})
+         )
+         (eventbox :class "media-next"
+                   :onclick "playerctl next"
+                   :cursor "pointer"
+                   :width 30
+                   :height 30
+                   :tooltip "Next track"
+                   (label :text "")
+         )
+    )
+)
+
+; Volume
+(defvar vol_reveal false)
+(defvar vol_mute false)
+
+(defvar brt_reveal false)
+(defvar brt_mute false)
+
+(defwidget volume []
+    (eventbox :onhover "${EWW_CMD} update vol_reveal=true"
+              :onhoverlost "${EWW_CMD} update vol_reveal=false"
+              (box :class "volume"
+                   :orientation "horizontal"
+                   :space-evenly false
+                   :spacing 10
+                   :halign "end"
+                   :hexpand true
+                   (revealer :transition "slideleft"
+                             :reveal vol_reveal
+                             (scale :class "volume-bar"
+                                    :value {vol_perc*100}
+                                    :round-digits 0
+                                    :tooltip "${vol_perc*100}%"
+                                    :orientation "horizontal"
+                                    :max 100
+                                    :min 0
+                                    :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
+                             )
+                   )
+                   (eventbox :class "volume-mute"
+                             :onclick "${EWW_CMD} update vol_mute=${!vol_mute} && wpctl set-mute @DEFAULT_AUDIO_SINK@ ${!vol_mute ? '1' : '0'}"
+                             :cursor "pointer"
+                             :tooltip {vol_mute ? "Unmute" : "Mute"}
+                             (label :text {vol_mute ? "🔇" : "🔊"})
+                   )
+              )
+    )
+)
+
+; Media info
+(defwidget music_short []
+    (box :class "music-short"
+         :orientation "horizontal"
+         :halign "center"
+         :space-evenly false
+         :spacing 10
+         (label :class "music-short-title"
+                :limit-width 25
+                :text {music_status == "PLAYING" || music_status == "PAUSED" ? "${music_title}" : "..."}
+         )
+         "by"
+         (label :class "music-short-artist"
+                :text {music_status == "PLAYING" || music_status == "PAUSED" ? "${music_artist}" : ""}
+         )
+    )
+)
+
+; Make music long when design is finished

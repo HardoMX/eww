@@ -1,0 +1,207 @@
+; == == == Variables == == ==
+(defpoll user :interval "24h"
+    "whoami")
+(defpoll uphour :interval "5m"
+    "uptime -p | awk '{print $2}'")
+(defpoll upminute :interval "5s"
+    "uptime -p | awk '{print $4}'")
+
+; == == == Widgets == == ==
+; CPU
+(defwidget CPU_short []
+    (label :class "cpu-short"
+           :text "${round(EWW_CPU.avg, 2)}%"
+    )
+)
+
+(defwidget CPU_long []
+    (circular-progress :class "cpu-circle"
+                       :value {EWW_CPU.avg}
+                       :thickness 2
+                       :clockwise true
+                       :start-at 25
+                       :width 20
+                       (label :text {round(EWW_CPU.avg, 0)})
+    )
+)
+
+(defwidget CPU_freq []
+    (label :class "cpu-freq"
+           :text "${EWW_CPU.cores[0].freq}MHz"
+    )
+)
+
+(defwidget CPU_avg_graph []
+    (graph :class "cpu-avg-graph"
+           :value {EWW_CPU.avg}
+           :dynamic true
+           :time-range "30s"
+           :thickness 2
+           :width 110
+    )
+)
+
+(defwidget CPU_freq_graph []
+    (graph :class "cpu-freq-graph"
+           :value {EWW_CPU.cores[0].freq}
+           :dynamic true
+           :time-range "30s"
+           :thickness 2
+           :width 110
+    )
+)
+
+
+; Memory
+(defwidget MEM_perc []
+    (label :class "mem-perc"
+           :text "${round(EWW_RAM.used_mem_perc, 0)}%"
+    )
+)
+
+(defwidget MEM_short []
+    (label :class "mem-short"
+           :text "${round(EWW_RAM.used_mem/1000000000, 0)}GiB/${round(EWW_RAM.total_mem/1000000000, 0)}GiB"
+    )
+)
+
+(defwidget MEM_long []
+    (box :class "mem-long"
+         :orientation "vertical"
+         (circular-progress :class "mem-circle"
+                            :value {round(EWW_RAM.used_mem_perc, 0)}
+                            :thickness 2
+                            :clockwise true
+                            :start-at 25
+                            :width 20
+                            (label :text {round(EWW_RAM.used_mem_perc, 0)})
+         )
+         (label :class "mem-circle-text"
+                :text "MEM"
+         )
+    )
+)
+
+(defwidget MEM_graph []
+    (graph :class "mem-graph"
+           :value {EWW_RAM.used_mem_perc}
+           :dynamic true
+           :time-range "30s"
+           :thickness 2
+           :width 110
+    )
+)
+
+
+; Disk
+(defwidget disk_short []
+    (label :class "disk-short"
+           :text "${round(EWW_DISK["/"].used/1000000000, 0)}GB / ${round(EWW_DISK["/"].total/1000000000, 0)}GB"
+    )
+)
+
+(defwidget disk_long []
+    (box :class "disk-long"
+         :orientation "vertical"
+         (circular-progress :class "disk-circle"
+                            :value {round(EWW_DISK["/"].used_perc, 0)}
+                            :thickness 2
+                            :clockwise true
+                            :start-at 25
+                            :width 20
+                            (label :text "${round(EWW_DISK["/"].used_perc, 0)}%")
+         )
+         (label :class "disk-text"
+                :text "DISK")
+    )
+)
+
+
+; Network
+(defwidget NET_short []
+    (box :class "net-short"
+         :orientation "horizontal"
+         :halign "center"
+         :space-evenly false
+         :spacing 10
+         (label :class "net-short-up"
+                :text "Up ${EWW_NET.enp5s0.NET_UP/2}B"
+         )
+         "|"
+         (label :class "net-short-down"
+                :text "Down ${EWW_NET.enp5s0.NET_DOWN/2}B"
+         )
+    )
+)
+
+(defwidget NET_long []
+    (box :class "net-long"
+         :orientation "horizontal"
+         :halign "center"
+         :space-evenly false
+         :spacing 10
+         (box :class "net-long-up"
+              :orientation "vertical"
+              (circular-progress :class "net-up-circle"
+                                 :value {round(EWW_NET.enp5s0.NET_UP/1000000000, 0)}
+                                 :thickness 2
+                                 :clockwise true
+                                 :start-at 25
+                                 :width 20
+                                 (label :text "${EWW_NET.enp5s0.NET_UP}b")
+              )
+              (label :class "net-up-text"
+                     :text "Net up"
+              )
+         )
+         (box :class "net-long-down"
+              :orientation "vertical"
+              (circular-progress :class "net-down-circle"
+                                 :value {round(EWW_NET.enp5s0.NET_DOWN/1000000000, 0)}
+                                 :thickness 2
+                                 :clockwise true
+                                 :start-at 25
+                                 :width 20
+                                 (label :text "${EWW_NET.enp5s0.NET_DOWN}b")
+              )
+              (label :class "net-down-text"
+                     :text "Net down"
+              )
+         )
+    )
+)
+
+(defwidget NET_graph []
+    (box :class "net-graph"
+         :orientation "horizontal"
+         :halign "center"
+         :space-evenly false
+         :spacing 10
+         (box :class "net-graph-up"
+              :orientation "vertical"
+              (label :class "net-graph-up-text"
+                     :text "Net up"
+              )
+              (graph :class "net-graph-up-line"
+                     :value {EWW_NET.enp5s0.NET_UP}
+                     :dynamic true
+                     :time-range "30s"
+                     :thickness 2   
+                     :width 110
+              )
+         )
+         (box :class "net-graph-down"
+              :orientation "vertical"
+              (label :class "net-graph-down-text"
+                     :text "Net down"
+              )
+              (graph :class "net-graph-down-line"
+                     :value {EWW_NET.enp5s0.NET_DOWN}
+                     :dynamic true
+                     :time-range "30s"
+                     :thickness 2   
+                     :width 110
+              )
+         )
+    )
+)

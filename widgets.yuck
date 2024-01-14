@@ -1,29 +1,344 @@
+; This file sets up larger widgets, containing sub-widgets
+
 (include "./variables.yuck")
+(include "./hyprland.yuck")
+(include "./time.yuck")
+(include "./weather.yuck")
+(include "./system.yuck")
+(include "./media.yuck")
 
-; == == == Hyprland == == ==
-(defwidget workspaces []
-    (eventbox :onscroll "./scripts/change-active-workspace.sh {} ${current_workspace}"
-        (box :space-evenly true
-            (label :text "${workspaces}${current_workspace}" :visible false)
-            (for workspace in workspaces
-                (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
-                    (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
-                        (label :text "${workspace.id}")
-                    )
-                )
-            )
-        )
+(defwidget brightness []
+    (eventbox :onhover "${EWW_CMD} update brt_reveal=true"
+              :onhoverlost "${EWW_CMD} update brt_reveal=false"
+              (box :class "brightness"
+                   :orientation "horizontal"
+                   :space-evenly false
+                   :spacing 10
+                   (revealer :transition "slideleft"
+                             :reveal brt_reveal
+                             (scale :class "brightness-bar"
+                                    :value 50
+                                    :round-digits 0
+                                    :tooltip "Currently doesn't work'"
+                                    :orientation "horizontal"
+                                    :max 100
+                                    :min 0
+                                    :onchange ""
+                             )
+                   )
+                   (label :class "brt-symbol"
+                          :text "sun") ; Change this to a responsive icon depending on brightness, after brightness is implemented
+              )
     )
 )
 
-(defwidget window_w []
-    (box
-        (label :text "${window}")
+
+
+; == == == Other == == ==
+(defwidget profile []
+    (box :class "profile"
+         :orientation "vertical"
+         :space-evenly false
+         :spacing 10
+         (image :class "profile-image"
+                :path "./images/profile.png"
+                :image-width 100
+                :image-height 100
+         )
+         (label :class "profile-username"
+                :text {user})
     )
 )
 
+(defwidget uptime []
+    (box :class "uptime"
+         :orientation "horizontal"
+         :space-evenly false
+         :spacing 10
+         (image :class "uptime-image"
+                :path "./images/uptime.png"
+                :image-width 75
+                :image-height 75
+         )
+         (box :class "uptime text"
+              :orientation "vertical"
+              (label :class "uptime-hour"
+                     :text "${uphour} hours")
+              (label :class "uptime-minute"
+                     :text "${upminute} minutes")
+         )
+    )
+)
 
-; == == == Time == == ==
-(defwidget time_short []
-    (label :class "time_short"
-           :text {EWW_TIME}))
+(defwidget menu []
+    (eventbox :class "menu"
+             :cursor "pointer"
+             :onclick ""
+             (label :text "MENU")
+    )
+)
+
+; == == == Folders == == ==
+(defwidget folders []
+    (box :class "folders"
+         :orientation "vertical"
+         (eventbox :onclick "./scripts/folders.sh --doc"
+                   :cursor "pointer"
+                   (box :class "folder-docs"
+                        :orientation "horizontal"
+                        :space-evenly false
+                        :spacing 25
+                        (image :path "./images/documents.png"
+                               :image-width 20
+                        )
+                        (label :text "Documents")
+                   )
+         )
+         (eventbox :onclick "./scripts/folders.sh --dl"
+                   :cursor "pointer"
+                   (box :class "folder-dls"
+                        :orientation "horizontal"
+                        :space-evenly false
+                        :spacing 25
+                        (image :path "./images/downloads.png"
+                               :image-width 20
+                        )
+                        (label :text "Downloads")
+                   )
+         )
+         (eventbox :onclick "./scripts/folders.sh --pics"
+                   :cursor "pointer"
+                   (box :class "folder-pics"
+                        :orientation "horizontal"
+                        :space-evenly false
+                        :spacing 25
+                        (image :path "./images/pictures.png"
+                               :image-width 20
+                        )
+                        (label :text "Pictures")
+                   )
+         )
+         (eventbox :onclick "./scripts/folders.sh --conf"
+                   :cursor "pointer"
+                   (box :class "folder-conf"
+                        :orientation "horizontal"
+                        :space-evenly false
+                        :spacing 25
+                        (image :path "./images/config.png"
+                               :image-width 20
+                        )
+                        (label :text "Config")
+                   )
+         )
+    )
+)
+
+; == == == Apps == == ==
+(defwidget apps []
+    (box :class "apps"
+         :orientation "vertical"
+         (box :class "apps-row-1"
+              (eventbox :class "explorer"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --fs"
+                        (image :path "./images/apps/explorer.png"
+                               :image-width 40
+                        )
+              )
+              (eventbox :class "terminal"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --term"
+                        (image :path "./images/apps/terminal.png"
+                               :image-width 40
+                        )
+              )
+              (eventbox :class "firefox"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --ff"
+                        (image :path "./images/apps/firefox.png"
+                               :image-width 40
+                        )
+              )
+         )
+         (box :class "apps-row-2"
+              (eventbox :class "nvim"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --nvim"
+                        (image :path "./images/apps/neovim.png"
+                               :image-width 40
+                        )
+              )
+              (eventbox :class "vscode"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --vscode"
+                        (image :path "./images/apps/vscode.png"
+                               :image-width 40
+                        )
+              )
+              (eventbox :class "gimp"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --gimp"
+                        (image :path "./images/apps/gimp.png"
+                               :image-width 40
+                        )
+              )
+         )
+         (box :class "apps-row-3"
+              (eventbox :class "discord"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --discord"
+                        (image :path "./images/apps/discord.png"
+                               :image-width 40
+                        )
+              )
+              (eventbox :class "vbox"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --vbox"
+                        (image :path "./images/apps/virtualbox.png"
+                               :image-width 40
+                        )
+              )
+              (eventbox :class "steam"
+                        :cursor "pointer"
+                        :width 50
+                        :onclick "./scripts/apps.sh --steam"
+                        (image :path "./images/apps/steam.png"
+                               :image-width 40
+                        )
+              )
+         )
+    )
+)
+
+; == == == Sites == == ==
+(defwidget gmail []
+    (eventbox :cursor "pointer"
+              :onclick "./scripts/links.sh --gmail"
+              (box :class "gmail"
+                   :orientation "vertical"
+                   :space-evenly false
+                   :spacing 10
+                   :width 100
+                   (image :path "./images/sites/gmail.png"
+                          :image-width 85
+                          :image-height 85
+                   )
+                   (label :class "gmails"
+                          :text "${gmails}"
+                   )
+              )
+    )
+)
+(defwidget pmail []
+    (eventbox :cursor "pointer"
+              :onclick "./scripts/links.sh --pmail"
+              (box :class "pmail"
+                   :orientation "vertical"
+                   :space-evenly false
+                   :spacing 10
+                   :width 100
+                   (image :path "./images/sites/pmail.png"
+                          :image-width 85
+                          :image-height 85
+                   )
+                   (label :class "pmails"
+                          :text "${pmails}"
+                   )
+              )
+    )
+)
+(defwidget git []
+    (eventbox :cursor "pointer"
+              :onclick "./scripts/links.sh --gh"
+              (box :class "git"
+                   :orientation "vertical"
+                   :space-evenly false
+                   :spacing 10
+                   :width 100
+                   (image :path "./images/sites/github.png"
+                          :image-width 85
+                          :image-height 85
+                   )
+              )
+    )
+)
+(defwidget reddit []
+    (eventbox :cursor "pointer"
+              :onclick "./scripts/links.sh --rd"
+              (box :class "git"
+                   :orientation "vertical"
+                   :space-evenly false
+                   :spacing 10
+                   :width 100
+                   (image :path "./images/sites/reddit.png"
+                          :image-width 85
+                          :image-height 85
+                   )
+              )
+    )
+)
+(defwidget yt []
+    (eventbox :cursor "pointer"
+              :onclick "./scripts/links.sh --yt"
+              (box :class "git"
+                   :orientation "vertical"
+                   :space-evenly false
+                   :spacing 10
+                   :width 100
+                   (image :path "./images/sites/youtube.png"
+                          :image-width 85
+                          :image-height 85
+                   )
+              )
+    )
+)
+
+; == == == Power Control == == ==
+(defwidget logout []
+    (eventbox :class "logout"
+              :cursor "pointer"
+              :onclick "systemctl"
+              (image :path "./images/system/logout.png"
+                     :image-width 50
+                     :image-height 50
+              )
+    )
+)
+(defwidget sleep []
+    (eventbox :class "sleep"
+              :cursor "pointer"
+              :onclick "systemctl suspend"
+              (image :path "./images/system/sleep.png"
+                     :image-width 50
+                     :image-height 50
+              )
+    )
+)
+(defwidget restart []
+    (eventbox :class "restart"
+              :cursor "pointer"
+              :onclick "systemctl reboot"
+              (image :path "./images/system/restart.png"
+                     :image-width 50
+                     :image-height 50
+              )
+    )
+)
+(defwidget shutdown []
+    (eventbox :class "shutdown"
+              :cursor "pointer"
+              :onclick "systemctl poweroff"
+              (image :path "./images/system/power-off.png"
+                     :image-width 50
+                     :image-height 50
+              )
+    )
+)

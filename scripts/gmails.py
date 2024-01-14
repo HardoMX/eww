@@ -1,6 +1,6 @@
 #!/bin/python
 
-file = open("../secret.txt", "r")
+file = open("./secret.txt", "r")
 file_lines = file.readlines()
 mail = file_lines[2]
 passwd = file_lines[3]

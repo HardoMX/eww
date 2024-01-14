@@ -1,0 +1,14 @@
+.volume-bar {
+    trough {
+        background-color: #333333;
+        border-radius: 50px;
+        min-height: 10px;
+        min-width: 100px;
+        margin: 0 10px 0 10px;
+
+        highlight {
+            background-color: #FF00FF;
+            border-radius: 10px;
+        }
+    }
+}
