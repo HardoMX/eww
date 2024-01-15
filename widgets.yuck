@@ -6,6 +6,7 @@
 (include "./weather.yuck")
 (include "./system.yuck")
 (include "./media.yuck")
+(include "./power.yuck")
 
 (defwidget brightness []
     (eventbox :onhover "${EWW_CMD} update brt_reveal=true"
@@ -297,48 +298,6 @@
                           :image-width 85
                           :image-height 85
                    )
-              )
-    )
-)
-
-; == == == Power Control == == ==
-(defwidget logout []
-    (eventbox :class "logout"
-              :cursor "pointer"
-              :onclick "systemctl"
-              (image :path "./images/system/logout.png"
-                     :image-width 50
-                     :image-height 50
-              )
-    )
-)
-(defwidget sleep []
-    (eventbox :class "sleep"
-              :cursor "pointer"
-              :onclick "systemctl suspend"
-              (image :path "./images/system/sleep.png"
-                     :image-width 50
-                     :image-height 50
-              )
-    )
-)
-(defwidget restart []
-    (eventbox :class "restart"
-              :cursor "pointer"
-              :onclick "systemctl reboot"
-              (image :path "./images/system/restart.png"
-                     :image-width 50
-                     :image-height 50
-              )
-    )
-)
-(defwidget shutdown []
-    (eventbox :class "shutdown"
-              :cursor "pointer"
-              :onclick "systemctl poweroff"
-              (image :path "./images/system/power-off.png"
-                     :image-width 50
-                     :image-height 50
               )
     )
 )

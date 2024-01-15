@@ -12,7 +12,7 @@
 (deflisten music_album :initial ""
     "playerctl --follow metadata status --format '{{ album }}' || true")
 (deflisten music_image :initial ""
-    "playerctl --follow metadata status --format '{{ mpris:artUrl }}' || true")
+    "playerctl --follow metadata status --format '{{ mpris:artUrl }}' | sed 's/file:\/\///' || true")
 (deflisten music_progress :initial ""
     "playerctl --follow metadata status --format '{{ duration(position) }}' || true")
 (deflisten music_length :initial ""

@@ -1,7 +1,7 @@
 (include "./widgets.yuck")
 
 
-; == == == Full widgets == == ==
+; == == == Bar == == ==
 (defwidget left []
     (box :class "left segment"
          :orientation "horizontal"
@@ -28,8 +28,8 @@
 )
 
 (defwidget right []
-    (box :class "right segment"
-         :orientation "horizontal"
+(box :class "right segment"
+    :orientation "horizontal"
          :space-evenly false
          :spacing 20
          :halign "end"
@@ -49,7 +49,6 @@
 )
 
 
-; == == == Windows == == ==
 (defwindow bar
     :monitor 0
     :geometry (geometry :x "0%"
@@ -60,4 +59,90 @@
     :stacking "fg"
     :exclusive true
     (bar)
+)
+
+; == == == Background == == ==
+(defwidget back_power [space]
+     (box :class "back-power"
+          :orientation "horizontal"
+          :space-evenly false
+          :spacing {space}
+          :halign "end"
+          :valign "end"
+          (shutdown)
+          (restart)
+          (logout)
+     )
+)
+
+(defwidget back_info [space]
+     (box :class "back-info"
+          :orientation "horizontal"
+          :space-evenly false
+          :spacing {space}
+          :halign "start"
+          :valign "end"
+          (CPU_long)
+          (MEM_long)
+          (disk_long)
+     )
+)
+
+(defwidget back_time [space]
+     (box :class "back-time"
+          :orientation "vertical"
+          :space-evenly false
+          :spacing {space}
+          :halign "end"
+          :valign "start"
+          (box :orientation "horizontal"
+               :space-evenly false
+               :spacing {space}
+               (sundial)
+               (label :text {weather_icon})
+          )
+          (date_long)
+     )
+)
+
+(defwidget back_music []
+     (box :class "back-music"
+          :orientation "vertical"
+          :space-evenly false
+          :spacing 10
+          :valign "start"
+          :halign "start"
+          (image :path {music_status == "PLAYING" || music_status == "PAUSED" ? "${music_image}" : ""}
+                 :image-width 100
+                 :image-height 100
+          )
+          (label :text {music_artist})
+          (media_control :space 10)
+     )
+)
+
+(defwidget background []
+     (box :class "background"
+          :orientation "horizontal"
+          (box :orientation "vertical"
+               (back_music)
+               (back_info :space 10)
+          )
+          (box :orientation "vertical"
+               (back_time :space 10)
+               (back_power :space 10)
+          )
+     )
+)
+
+(defwindow background
+     :monitor 0
+     :geometry (geometry :x "0%"
+                         :y "0%"
+                         :width "90%"
+                         :height "90%"
+                         :anchor "center center")
+     :stacking "bg"
+     :exclusive false
+     (background)
 )

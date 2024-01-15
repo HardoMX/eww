@@ -1,3 +1,6 @@
+@import "widgets.scss"
+
+/* Bar */
 * {
     all: unset;
     font-family: "Noto Sans";
@@ -24,4 +27,11 @@
 }
 
 
-@import "widgets.scss"
+/* Background */
+.background { background-color: #AAAAAA; }
+.back-power {
+    background-color: #666666;
+    widget {
+        background-color: #333333;
+    }
+}
