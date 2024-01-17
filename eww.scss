@@ -1,5 +1,7 @@
 @import "widgets.scss"
 
+$background: #333333;
+
 /* Bar */
 * {
     all: unset;
@@ -8,9 +10,8 @@
 }
 
 .segment {
-    background-color: #AAAAAA;
+    background-color: $background;
 
-    border: solid #00FFFF 0.2rem;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 1.5rem;
@@ -28,10 +29,19 @@
 
 
 /* Background */
-.background { background-color: #AAAAAA; }
-.back-power {
-    background-color: #666666;
-    widget {
-        background-color: #333333;
-    }
+/*.back-widget {
+    background-color: $background;
+    padding: 2rem;
+    border-radius: 2rem;
+}*/
+
+.back-power > .power-widget > label {
+    background-color: $background;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+.back-info > .info-long {
+    background-color: $background;
+    padding: 1rem;
+    border-radius: 1rem;
 }

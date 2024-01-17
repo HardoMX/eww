@@ -63,7 +63,7 @@
 
 ; == == == Background == == ==
 (defwidget back_power [space]
-     (box :class "back-power"
+     (box :class "back-power back-widget"
           :orientation "horizontal"
           :space-evenly false
           :spacing {space}
@@ -76,7 +76,7 @@
 )
 
 (defwidget back_info [space]
-     (box :class "back-info"
+     (box :class "back-info back-widget"
           :orientation "horizontal"
           :space-evenly false
           :spacing {space}
@@ -89,7 +89,7 @@
 )
 
 (defwidget back_time [space]
-     (box :class "back-time"
+     (box :class "back-time back-widget"
           :orientation "vertical"
           :space-evenly false
           :spacing {space}
@@ -98,24 +98,28 @@
           (box :orientation "horizontal"
                :space-evenly false
                :spacing {space}
+               :halign "center"
                (sundial)
-               (label :text {weather_icon})
+               "|"
+               (label :text {weather_status})
           )
           (date_long)
      )
 )
 
 (defwidget back_music []
-     (box :class "back-music"
+     (box :class "back-music back-widget"
           :orientation "vertical"
           :space-evenly false
           :spacing 10
           :valign "start"
           :halign "start"
-          (image :path {music_status == "PLAYING" || music_status == "PAUSED" ? "${music_image}" : ""}
+          (image :path {strlength(music_image) > 0 ? "${replace(music_image, 'file://', '')}" : "./images/no-image-found.png"}
                  :image-width 100
                  :image-height 100
           )
+          (label :text {music_title}
+                 :limit-width 15)
           (label :text {music_artist})
           (media_control :space 10)
      )

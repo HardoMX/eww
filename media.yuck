@@ -8,15 +8,15 @@
 (deflisten music_artist :initial ""
     "playerctl --follow metadata --format '{{ artist }}' || true")
 (deflisten music_title :initial ""
-    "playerctl --follow metadata status --format '{{ title }}' || true")
+    "playerctl --follow metadata --format '{{ title }}' || true")
 (deflisten music_album :initial ""
-    "playerctl --follow metadata status --format '{{ album }}' || true")
+    "playerctl --follow metadata --format '{{ album }}' || true")
 (deflisten music_image :initial ""
-    "playerctl --follow metadata status --format '{{ mpris:artUrl }}' | sed 's/file:\/\///' || true")
+    "playerctl --follow metadata --format '{{ mpris:artUrl}}'")
 (deflisten music_progress :initial ""
-    "playerctl --follow metadata status --format '{{ duration(position) }}' || true")
+    "playerctl --follow position --format '{{ duration(position) }}'")
 (deflisten music_length :initial ""
-    "playerctl --follow metadata status --format '{{ duration(mpris:length) }}' || true")
+    "playerctl --follow metadata --format '{{ duration(mpris:length) }}'")
 
 ; == == == Widgets == == ==
 ; Playback control
