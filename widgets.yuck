@@ -1,0 +1,126 @@
+; == == == This file creates all the basic widgets used by EWW == == ==
+; i.e, it basically creates widgets that are used in laeger widgets in the eww.yuck file
+
+(include "./variables.yuck")
+
+; == == == Time == == ==
+(defwidget time []
+    (label :class "time"
+           :tooltip "${formattime(EWW_TIME, '%H:%M:%S, %A')}"
+           :text {formattime(EWW_TIME, '%H:%M')}
+    )
+)
+
+(defwidget date []
+    (label :class "date"
+           :tooltip "${formattime(EWW_TIME, '%A, %B %d, %Y')}"
+           :text {formattime(EWW_TIME, "%Y-%m-%d")}
+    )
+)
+
+; == == == Weather == == ==
+(defwidget weather_short []
+    (label :class "weather-short"
+           :tooltip "Temperature / Feels like / wind"
+           :text "${weather_temp}°C / ${weather_feels}°C / ${weather_wind}m/s"
+    )
+)
+
+(defwidget weather_long []
+    (box :class "weather-long"
+         :orientation "vertical"
+         (box :orientation "horizontal"
+              (label :text "${weather_temp}°C")
+              (label :text "${weather_feels}°C")
+              (label :text "${weather_humidity}%")
+         )
+         (box :orientation "horizontal"
+              (label :text {weather_cond_full})
+              (label :text "${weather_pressure}Pa")
+              (label :text {weather_locale})
+          )
+         (box :orientation "horizontal"
+              (label :text "${weather_wind}m/s")
+              (label :text "${weather_deg}°")
+              (label :text "(${weather_gust}m/s)")
+          )
+    )
+)
+
+
+; == == == System == == ==
+; CPU
+(defwidget CPU_short []
+    (label :class "cpu-short"
+           :text "${round(EWW_CPU.avg, 2)}%"
+    )
+)
+
+; RAM
+(defwidget RAM_short []
+    (label :class "ram-short"
+           :text "${round(EWW_RAM.used_mem_perc, 2)}%"
+    )
+)
+
+; Battery
+(defwidget battery []
+    (label :class "battery"
+           :tooltip "${EWW_BATTERY.BAT1.status}"
+           :text "${EWW_BATTERY.BAT1.capacity}%"
+    )
+)
+
+; Disk
+(defwidget disk_short []
+    (label :class "disk-short"
+           :text "${round(EWW_DISK['/'].used_perc, 2)}%"
+    )
+)
+
+; Network
+(defwidget NET_short []
+    (box :class "net-short"
+         :halign "center"
+         :space-evenly false
+         :spacing 10
+         (label :text "↑${round(EWW_NET.wlp2s0.NET_UP, 2)}")
+         "|"
+         (label :text "↓${round(EWW_NET.wlp2s0.NET_DOWN, 2)}")
+    )
+)
+
+; == == == Power == == ==
+(defwidget power_off []
+    (eventbox :class "power-off"
+              :tooltip "Powers of system with `systemctl poweroff` there is no delay"
+              :onclick "systemctl poweroff"
+              :cursor "pointer"
+              (image :icon "system-shutdown-symbolic")
+    )
+)
+
+(defwidget suspend []
+    (eventbox :class "suspend"
+              :tooltip "Suspends the sustem with `systemctl suspend` there is no delay"
+              :onclick "systemctl suspend"
+              :cursor "pointer"
+              (image :icon "system-log-out-symbolic")
+    )
+)
+
+(defwidget reboot []
+    (eventbox :class "reboot"
+              :tooltip "Reboots the system with `systemctl reboot` there is no delay"
+              :onclick "systemctl reboot"
+              :cursor "pointer"
+              (image :icon "system-reboot-symbolic")
+    )
+)
+
+(defwidget lock []
+    (eventbox :class "lock"
+              :tooltip "Locks the system with `hyprlock`"
+              :onclick "hyprlock"
+              :cursor "pointer"
+              (image :icon "system-lock-screen-symbolic")))

@@ -1,0 +1,77 @@
+; == == == This file sets up all non-magic variables used by EWW == == ==
+
+; == == == Weather == == ==
+(defpoll weather_temp :interval "1s"
+    "./scripts/weather.sh --temp")
+
+(defpoll weather_feels :interval "15m"
+    "./scripts/weather.sh --feels")
+
+(defpoll weather_cond_short :interval "15m"
+    "./scripts/weather.sh --cond")
+
+(defpoll weather_cond_full :interval "15m"
+    "./scripts/weather.sh --cond-full")
+
+(defpoll weather_pressure :interval "1h"
+    "./scripts/weather.sh --pressure")
+
+(defpoll weather_humidity :interval "1h"
+    "./scripts/weather.sh --humidity")
+
+(defpoll weather_locale :interval "12h"
+    "./scripts/weather.sh --locale")
+
+(defpoll weather_wind :interval "1h"
+    "./scripts/weather.sh --wind")
+
+(defpoll weather_gust :interval "1h"
+    "./scripts/weather.sh --gust")
+
+(defpoll weather_deg :interval "1h"
+    "./scripts/weather.sh --deg")
+
+
+; == == == System == == ==
+(defpoll user :interval "12h"
+    "whoami")
+
+(defpoll uphour :interval "5m"
+    "uptime -p |awk '{print $2}'")
+
+(defpoll upminute :interval "5s"
+    "uptime -p | awk '{print $4}'")
+
+
+; == == == Media == == ==
+(defpoll vol_perc :interval "1s"
+    "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2}'")
+
+(deflisten music_status :initial ""
+    "playerctl --follow status --format '{{ uc(status) }}' || true")
+
+(deflisten music_artist :initial ""
+    "playerctl follow metadata --format '{{ artist }}' || true")
+
+(deflisten music_title :initial ""
+    "playerctl follow metadata --format '{{ title }}' || true")
+
+(deflisten music_album :initial ""
+    "playerctl follow metadata --format '{{ album }}' || true")
+
+(deflisten music_image :initial ""
+    "playerctl follow metadata --format '{{ mpris:artUrl }}'")
+
+(deflisten music_progress :initial ""
+    "playerctl follow metadata --format '{{ duration(position) }}'")
+
+(deflisten music_length :initial ""
+    "playerctl follow metadata --format '{{ duration(mpris:length) }}'")
+
+
+; == == == Hyprland == == ==
+(deflisten workspaces :initial "[]"
+    "./scripts/hyprland.sh --get")
+
+(deflisten current_workspace :initial "1"
+    "./scripts/hyprland.sh --current")
