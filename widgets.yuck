@@ -51,23 +51,33 @@
 ; == == == System == == ==
 ; CPU
 (defwidget CPU_short []
-    (label :class "cpu-short"
-           :text "${round(EWW_CPU.avg, 2)}%"
+    (box :class "cpu-short"
+         :space-evenly false
+         :spacing 5
+         (image :path "./icons/cpu.svg")
+         (label :text "${round(EWW_CPU.avg, 2)}%")
     )
 )
 
 ; RAM
 (defwidget RAM_short []
-    (label :class "ram-short"
-           :text "${round(EWW_RAM.used_mem_perc, 2)}%"
+    (box :class "ram-short"
+         :space-evenly false
+         :spacing 5
+         (image :path "./icons/memory.svg")
+         (label :text "${round(EWW_RAM.used_mem_perc, 2)}%")
     )
 )
 
 ; Battery
 (defwidget battery []
-    (label :class "battery"
-           :tooltip "${EWW_BATTERY.BAT1.status}"
-           :text "${EWW_BATTERY.BAT1.capacity}%"
+    (box :class "battery"
+         :space-evenly false
+         :spacing 5
+         (image :icon "battery-symbolic")
+         (label :tooltip "${EWW_BATTERY.BAT1.status}"
+                :text "${EWW_BATTERY.BAT1.capacity}%"
+         )
     )
 )
 
@@ -91,6 +101,8 @@
 )
 
 ; == == == Power == == ==
+(defvar sys_reveal false)
+
 (defwidget power_off []
     (eventbox :class "power-off"
               :tooltip "Powers of system with `systemctl poweroff` there is no delay"
@@ -120,7 +132,125 @@
 
 (defwidget lock []
     (eventbox :class "lock"
-              :tooltip "Locks the system with `hyprlock`"
+              :tooltip "Locks the system with `hyprlock` WARNING, CURRENTLY BROKEN"
               :onclick "hyprlock"
               :cursor "pointer"
-              (image :icon "system-lock-screen-symbolic")))
+              (image :icon "system-lock-screen-symbolic")
+    )
+)
+
+(defwidget system_short []
+    (eventbox :onhover "${EWW_CMD} update sys_reveal=true"
+              :onhoverlost "${EWW_CMD} update sys_reveal=false"
+              (box :class "system-short"
+                   :orientation "horizontal"
+                   :space-evenly false
+                   :spacing 10
+                   :hexpand true
+                   (revealer :transition "slideleft"
+                             :reveal sys_reveal
+                             (box :orientation "horizontal"
+                                  :space-evenly false
+                                  :spacing 10
+                                  (reboot)
+                                  (power_off)
+                                  (lock)
+                                  (suspend)
+                             )
+                   )
+                   (eventbox :cursor "pointer"
+                             (image :icon "open-menu-symbolic")
+                   )
+              )
+    )
+)
+
+
+; == == == Media == == ==
+(defvar mute false)
+(defvar vol_reveal false)
+(defvar brt_reveal false)
+
+(defwidget media_control_short []
+    (centerbox :class "music-control-short"
+               (eventbox :class "media-prev"
+                         :onclick "playerctl previous"
+                         :tooltip "Previous track"
+                         :cursor "pointer"
+                         (image :icon "go-previous-symbolic")
+               )
+               (eventbox :class "media-play"
+                         :onclick "playerctl play-pause"
+                         :tooltip {music_status == "PLAYING" ? "Pause" : "Play"}
+                         :cursor "pointer"
+                         (image :icon {music_status == "PLAYING" ? "media-playback-pause-symbolic" : "media-playback-start-symbolic"})
+               )
+               (eventbox :class "media-next"
+                         :onclick "playerctl next"
+                         :tooltip "Next track"
+                         :cursor "pointer"
+                         (image :icon "go-next-symbolic")
+               )
+    )
+)
+
+(defwidget bluetooth_icon []
+    (image :class "bluetooth-icon"
+           :icon "bluetooth-symbolic"
+    )
+)
+
+(defwidget volume_bar []
+    (eventbox :onhover "${EWW_CMD} update vol_reveal=true"
+              :onhoverlost "${EWW_CMD} update vol_reveal=false"
+              (box :class "volume"
+                   :orientation "horizontal"
+                   :space-evenly false
+                   :spacing 10
+                   :hexpand true
+                   (revealer :transition "slideleft"
+                             :reveal vol_reveal
+                             (scale :class "volume-bar"
+                                    :value {vol_perc*100}
+                                    :round-digits 0
+                                    :tooltip "Volume: ${vol_perc*100}%"
+                                    :orientation "horizontal"
+                                    :max 100
+                                    :min 0
+                                    :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
+                             )
+                   )
+                   (eventbox :class "volume-mute"
+                             :onclick "${EWW_CMD} update mute=${!mute} && wpctl set-mute @DEFAULT_AUDIO_SINK@ ${!mute ? '1' : '0'}"
+                             :cursor "pointer"
+                             :tooltip {mute ? "Unmute" : "Mute"}
+                             (image :icon {mute ? "audio-volume-muted-symbolic" : "audio-volume-high-symbolic"})
+                   )
+              )
+    )
+)
+
+(defwidget brightness_bar []
+    (eventbox :onhover "${EWW_CMD} update brt_reveal=true"
+              :onhoverlost "${EWW_CMD} update brt_reveal=false"
+              (box :class "brightness"
+                   :orientation "horizontal"
+                   :space-evenly false
+                   :spacing 10
+                   :hexpand true
+                   (revealer :transition "slideleft"
+                             :reveal brt_reveal
+                             (scale :class "brightness-bar"
+                                    :value {brt_perc}
+                                    :round-digits 0
+                                    :tooltip "Brightness: ${round(brt_perc/255*100, 0)}%"
+                                    :orientation "horizontal"
+                                    :max 255
+                                    :min 5
+                                    :onchange "brightnessctl set {}"
+                             )
+                   )
+                   (image :icon "display-brightness-symbolic")
+              )
+    )
+)

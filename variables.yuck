@@ -42,6 +42,9 @@
 (defpoll upminute :interval "5s"
     "uptime -p | awk '{print $4}'")
 
+(defpoll brt_perc :interval "1s"
+    "brightnessctl g")
+
 
 ; == == == Media == == ==
 (defpoll vol_perc :interval "1s"
