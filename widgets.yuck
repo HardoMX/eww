@@ -172,7 +172,10 @@
 (defvar brt_reveal false)
 
 (defwidget media_control_short []
-    (centerbox :class "music-control-short"
+    (box :class "music-control-short"
+         :space-evenly false
+         :spacing 1
+         (label :text "${music_title}")
                (eventbox :class "media-prev"
                          :onclick "playerctl previous"
                          :tooltip "Previous track"
@@ -252,5 +255,19 @@
                    )
                    (image :icon "display-brightness-symbolic")
               )
+    )
+)
+
+
+; == == == Hyprland == == ==
+(defwidget workspaces []
+    (box :class "workspaces"
+         :spacing 5
+         (for workspace in workspaces
+            (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
+                      :cursor "pointer"
+                      :class "workspace-entry ${workspace.id == current_workspace ? "current-workspace" : ""} ${workspace.windows > 0 ? "occupied-workspace" : "empty-workspace"}"
+            )
+         )
     )
 )

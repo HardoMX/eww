@@ -11,6 +11,7 @@
     border: 0.1rem solid $nord7;
     border-radius: 1rem;
     padding: 0 1rem 0 1rem;
+    min-width: 105rem;
 }
 
 .volume-bar {
@@ -47,4 +48,20 @@
             border-radius: 1rem;
         }
     }
+}
+
+
+
+.workspaces {
+    background-color: $nord0;
+    min-width: 107rem;
+}
+.workspace-entry {
+    background-color: $nord1;
+}
+.occupied-workspace {
+    background-color: $nord10;
+}
+.current-workspace {
+    background-color: $nord8;
 }
