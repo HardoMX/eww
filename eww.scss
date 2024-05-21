@@ -50,6 +50,18 @@
     }
 }
 
+.date_full {
+    background-color: $nord0;
+    padding: 1rem;
+    border: 0.1rem solid $nord7;
+    border-radius: 1rem;
+
+    .calendar {
+        border: 0.1rem solid $nord11;
+        border-radius: 1rem;
+    }
+}
+
 
 
 .workspaces {
@@ -63,5 +75,5 @@
     background-color: $nord10;
 }
 .current-workspace {
-    background-color: $nord8;
+    background-color: $nord5;
 }

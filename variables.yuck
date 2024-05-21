@@ -76,5 +76,5 @@
 (deflisten workspaces :initial "[]"
     "./scripts/hyprland.sh --get")
 
-(deflisten current_workspace :initial "1"
+(deflisten current_workspace :initial ""
     "./scripts/hyprland.sh --current")

@@ -1,5 +1,5 @@
 ; == == == This file creates all the basic widgets used by EWW == == ==
-; i.e, it basically creates widgets that are used in laeger widgets in the eww.yuck file
+; i.e, it basically creates widgets that are used in larger widgets in the eww.yuck file
 
 (include "./variables.yuck")
 
@@ -8,6 +8,18 @@
     (label :class "time"
            :tooltip "${formattime(EWW_TIME, '%H:%M:%S, %A')}"
            :text {formattime(EWW_TIME, '%H:%M')}
+    )
+)
+
+(defwidget hour []
+    (label :class "hour"
+           :text {formattime(EWW_TIME, '%H')}
+    )
+)
+
+(defwidget minute []
+    (label :class "minute"
+           :text {formattime(EWW_TIME, '%M')}
     )
 )
 
@@ -175,25 +187,26 @@
     (box :class "music-control-short"
          :space-evenly false
          :spacing 1
-         (label :text "${music_title}")
-               (eventbox :class "media-prev"
-                         :onclick "playerctl previous"
-                         :tooltip "Previous track"
-                         :cursor "pointer"
-                         (image :icon "go-previous-symbolic")
-               )
-               (eventbox :class "media-play"
-                         :onclick "playerctl play-pause"
-                         :tooltip {music_status == "PLAYING" ? "Pause" : "Play"}
-                         :cursor "pointer"
-                         (image :icon {music_status == "PLAYING" ? "media-playback-pause-symbolic" : "media-playback-start-symbolic"})
-               )
-               (eventbox :class "media-next"
-                         :onclick "playerctl next"
-                         :tooltip "Next track"
-                         :cursor "pointer"
-                         (image :icon "go-next-symbolic")
-               )
+         (label :text "${music_title}"
+                :limit-width 25)
+                (eventbox :class "media-prev"
+                          :onclick "playerctl previous"
+                          :tooltip "Previous track"
+                          :cursor "pointer"
+                          (image :icon "go-previous-symbolic")
+                )
+                (eventbox :class "media-play"
+                          :onclick "playerctl play-pause"
+                          :tooltip {music_status == "PLAYING" ? "Pause" : "Play"}
+                          :cursor "pointer"
+                          (image :icon {music_status == "PLAYING" ? "media-playback-pause-symbolic" : "media-playback-start-symbolic"})
+                )
+                (eventbox :class "media-next"
+                          :onclick "playerctl next"
+                          :tooltip "Next track"
+                          :cursor "pointer"
+                          (image :icon "go-next-symbolic")
+                )
     )
 )
 

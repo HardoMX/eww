@@ -2,6 +2,7 @@
 
 (include "./widgets.yuck")
 
+; == == == Top bar == == ==
 (defwidget left []
     (box :orientation "horizontal"
          :space-evenly false
@@ -56,6 +57,48 @@
     (bar)
 )
 
+; == == == Bar expanding == == ==
+(defvar date_reveal true)
+
+(defwidget date_full []
+    (revealer :transition "slidedown"
+              :reveal date_reveal
+              (box :orientation "vertical"
+                   :space-evenly false
+                   :spacing 5
+                   (box :orientation "horizontal"
+                        :space-evenly false
+                        :spacing 5
+                        (calendar :show-week-numbers true
+                                  :day 10
+                                  :class "calendar")
+                        (box :orientation "vertical"
+                             :space-evenly false
+                             :spacing 10
+                             :valign "center"
+                             :class "clock-vert"
+                             (hour)
+                             (minute)
+                        )
+                   )
+                   (weather_long)
+              )
+    )
+)
+
+(defwindow date_full
+    :monitor 0
+    :geometry (geometry :x "0%"
+                        :y "3%"
+                        :width "10%"
+                        :height "10%"
+                        :anchor "top center")
+    :stacking "fg"
+    :exclusive false
+    (date_full)
+)
+
+; == == == Bottom bar/Workspaces == == ==
 (defwindow workspaces
     :monitor 0
     :geometry (geometry :x "0%"
