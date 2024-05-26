@@ -106,9 +106,9 @@
          :halign "center"
          :space-evenly false
          :spacing 10
-         (label :text "↑${round(EWW_NET.wlp2s0.NET_UP, 2)}")
+         (label :text "↑${round(EWW_NET.wlan0.NET_UP, 2)}")
          "|"
-         (label :text "↓${round(EWW_NET.wlp2s0.NET_DOWN, 2)}")
+         (label :text "↓${round(EWW_NET.wlan0.NET_DOWN, 2)}")
     )
 )
 
