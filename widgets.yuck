@@ -86,7 +86,28 @@
     (box :class "battery"
          :space-evenly false
          :spacing 5
-         (image :icon "battery-symbolic")
+         (image :icon {EWW_BATTERY.BAT1.status == "Charging" && EWW_BATTERY.BAT1.capacity <= 10 ? "battery-level-10-charging-symbolic" :
+                       EWW_BATTERY.BAT1.status == "Charging" && EWW_BATTERY.BAT1.capacity <= 20 ? "battery-level-20-charging-symbolic" :
+                       EWW_BATTERY.BAT1.status == "Charging" && EWW_BATTERY.BAT1.capacity <= 30 ? "battery-level-30-charging-symbolic" :
+                       EWW_BATTERY.BAT1.status == "Charging" && EWW_BATTERY.BAT1.capacity <= 40 ? "battery-level-40-charging-symbolic" :
+                       EWW_BATTERY.BAT1.status == "Charging" && EWW_BATTERY.BAT1.capacity <= 50 ? "battery-level-50-charging-symbolic" :
+                       EWW_BATTERY.BAT1.status == "Charging" && EWW_BATTERY.BAT1.capacity <= 60 ? "battery-level-60-charging-symbolic" :
+                       EWW_BATTERY.BAT1.status == "Charging" && EWW_BATTERY.BAT1.capacity <= 70 ? "battery-level-70-charging-symbolic" :
+                       EWW_BATTERY.BAT1.status == "Charging" && EWW_BATTERY.BAT1.capacity <= 80 ? "battery-level-80-charging-symbolic" :
+                       EWW_BATTERY.BAT1.status == "Charging" && EWW_BATTERY.BAT1.capacity <= 90 ? "battery-level-90-charging-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Full" && EWW_BATTERY.BAT1.capacity <= 100 ? "battery-level-100-charged-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 10 ? "battery-level-10-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 20 ? "battery-level-20-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 30 ? "battery-level-30-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 40 ? "battery-level-40-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 50 ? "battery-level-50-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 60 ? "battery-level-60-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 70 ? "battery-level-70-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 80 ? "battery-level-80-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 90 ? "battery-level-90-symbolic" : 
+                       EWW_BATTERY.BAT1.status == "Discharging" && EWW_BATTERY.BAT1.capacity <= 100 ? "battery-level-100-symbolic" : 
+                       "battery-missing-symbolic"
+                       })
          (label :tooltip "${EWW_BATTERY.BAT1.status}"
                 :text "${EWW_BATTERY.BAT1.capacity}%"
          )
