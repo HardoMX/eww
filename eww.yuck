@@ -31,7 +31,7 @@
          :spacing 15
          :halign "end"
          (media_control_short)
-         (bluetooth_icon)
+         (system_tray)
          (volume_bar)
          (brightness_bar)
          (system_short)

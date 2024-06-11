@@ -305,3 +305,7 @@
          )
     )
 )
+
+
+(defwidget system_tray []
+    (systray))
