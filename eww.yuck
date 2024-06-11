@@ -15,11 +15,13 @@
 )
 
 (defwidget middle []
-    (box :orientation "horizontal"
-         :space-evenly false
-         :spacing 15
-         :halign "center"
-         (time)
+    (eventbox :orientation "horizontal"
+              :space-evenly false
+              :spacing 15
+              :halign "center"
+              :onclick "${EWW_CMD} update date_reveal=${!date_reveal}"
+              :cursor "pointer"
+              (time)
     )
 )
 
@@ -58,11 +60,11 @@
 )
 
 ; == == == Bar expanding == == ==
-(defvar date_reveal true)
+(defvar date_reveal false)
 
-(defwidget date_full []
+(defwidget date_full [reveal]
     (revealer :transition "slidedown"
-              :reveal date_reveal
+              :reveal reveal
               (box :orientation "vertical"
                    :space-evenly false
                    :spacing 5
@@ -74,7 +76,7 @@
                                   :class "calendar")
                         (box :orientation "vertical"
                              :space-evenly false
-                             :spacing 10
+                             :spacing -45
                              :valign "center"
                              :class "clock-vert"
                              (hour)
@@ -90,12 +92,12 @@
     :monitor 0
     :geometry (geometry :x "0%"
                         :y "3%"
-                        :width "10%"
-                        :height "10%"
+                        :width "0%"
+                        :height "0%"
                         :anchor "top center")
     :stacking "fg"
     :exclusive false
-    (date_full)
+    (date_full :reveal date_reveal)
 )
 
 ; == == == Bottom bar/Workspaces == == ==

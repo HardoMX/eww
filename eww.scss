@@ -60,6 +60,20 @@
         border: 0.1rem solid $nord11;
         border-radius: 1rem;
     }
+
+    .clock-vert {
+        font-size: 5rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+
+        .hour {
+            padding-right: 4rem;
+        }
+
+        .minute {
+            padding-left: 4rem;
+        }
+    }
 }
 
 
