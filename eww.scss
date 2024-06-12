@@ -50,6 +50,13 @@
     }
 }
 
+/* Trying to style the nm-applet */
+.systray {
+    background csd popup {
+        background-color: $nord0;
+    }
+}
+
 .date_full {
     background-color: $nord0;
     padding: 1rem;

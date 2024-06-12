@@ -15,5 +15,5 @@ elif [[ "$1" == "--get" ]]; then
         spaces
     done
 else
-    echo Error
+    echo Use --current to track workspace, and --get to get all workspaces and info about them
 fi
