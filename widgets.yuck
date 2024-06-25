@@ -6,7 +6,7 @@
 ; == == == Time == == ==
 (defwidget time []
     (label :class "time"
-           :tooltip "${formattime(EWW_TIME, '%H:%M:%S, %A')}"
+           :tooltip "${formattime(EWW_TIME, '%H:%M:%S, %A, %Y-%m-%d')}"
            :text {formattime(EWW_TIME, '%H:%M')}
     )
 )
