@@ -71,6 +71,9 @@
 (deflisten music_length :initial ""
     "playerctl --follow metadata --format '{{ duration(mpris:length) }}'")
 
+(defpoll mute :interval "0.2s"
+    "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk {'print $3'}")
+
 
 ; == == == Hyprland == == ==
 (deflisten workspaces :initial "[]"

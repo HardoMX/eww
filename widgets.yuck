@@ -200,7 +200,6 @@
 
 
 ; == == == Media == == ==
-(defvar mute false)
 (defvar vol_reveal false)
 (defvar brt_reveal false)
 
@@ -258,10 +257,10 @@
                              )
                    )
                    (eventbox :class "volume-mute"
-                             :onclick "${EWW_CMD} update mute=${!mute} && wpctl set-mute @DEFAULT_AUDIO_SINK@ ${!mute ? '1' : '0'}"
+                             :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
                              :cursor "pointer"
-                             :tooltip {mute ? "Unmute" : "Mute"}
-                             (image :icon {mute ? "audio-volume-muted-symbolic" : "audio-volume-high-symbolic"})
+                             :tooltip {mute == "[MUTED]" ? "Unmute" : "Mute"}
+                             (image :icon {mute == "[MUTED]" ? "audio-volume-muted-symbolic" : "audio-volume-high-symbolic"})
                    )
               )
     )
