@@ -127,18 +127,27 @@
          :halign "center"
          :space-evenly false
          :spacing 10
-         (label :text "↑${round(EWW_NET.wlan0.NET_UP, 2)}")
+         (label :text "↑${round(EWW_NET.wlan0.NET_UP/1000000, 2)}Mb/s")
          "|"
-         (label :text "↓${round(EWW_NET.wlan0.NET_DOWN, 2)}")
+         (label :text "↓${round(EWW_NET.wlan0.NET_DOWN/1000000, 2)}Mb/s")
     )
 )
 
 ; == == == Power == == ==
 (defvar sys_reveal false)
 
+(defwidget logout []
+    (eventbox :class "logout"
+              :tooltip "Logs you out (Hyprland specific)"
+              :onclick "hyprctl dispatch exit"
+              :cursor "pointer"
+              (image :icon "system-log-out-symbolic")
+    )
+)
+
 (defwidget power_off []
     (eventbox :class "power-off"
-              :tooltip "Powers of system with `systemctl poweroff` there is no delay"
+              :tooltip "Powers off system with `systemctl poweroff` there is no delay"
               :onclick "systemctl poweroff"
               :cursor "pointer"
               (image :icon "system-shutdown-symbolic")
@@ -147,10 +156,10 @@
 
 (defwidget suspend []
     (eventbox :class "suspend"
-              :tooltip "Suspends the sustem with `systemctl suspend` there is no delay"
-              :onclick "systemctl suspend"
+              :tooltip "Suspends the sustem with `systemctl hybrid-sleep` there is no delay"
+              :onclick "systemctl hybrid-sleep"
               :cursor "pointer"
-              (image :icon "system-log-out-symbolic")
+              (image :icon "window-close-symbolic")
     )
 )
 
@@ -187,6 +196,7 @@
                                   :spacing 10
                                   (reboot)
                                   (power_off)
+                                  (logout)
                                   (lock)
                                   (suspend)
                              )
