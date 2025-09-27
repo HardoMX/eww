@@ -48,7 +48,7 @@
 )
 
 (defwindow bar
-    :monitor 0
+    :monitor 1
     :geometry (geometry :x "0%"
                         :y "1%"
                         :width "98.5%"
@@ -89,7 +89,7 @@
 )
 
 (defwindow date_full
-    :monitor 0
+    :monitor 1
     :geometry (geometry :x "0%"
                         :y "3%"
                         :width "0%"
@@ -102,7 +102,7 @@
 
 ; == == == Bottom bar/Workspaces == == ==
 (defwindow workspaces
-    :monitor 0
+    :monitor 1
     :geometry (geometry :x "0%"
                         :y "0%"
                         :width "100%"

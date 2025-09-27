@@ -65,11 +65,14 @@
 (deflisten music_image :initial ""
     "playerctl --follow metadata --format '{{ mpris:artUrl }}'")
 
-(deflisten music_progress :initial ""
-    "playerctl --follow metadata --format '{{ duration(position) }}'")
+(defpoll music_progress :interval "200ms"
+    "playerctl position")
 
 (deflisten music_length :initial ""
     "playerctl --follow metadata --format '{{ duration(mpris:length) }}'")
+
+(deflisten music_length_us :initial ""
+    "playerctl --follow metadata --format '{{ mpris:length }}'")
 
 (defpoll mute :interval "0.2s"
     "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk {'print $3'}")
